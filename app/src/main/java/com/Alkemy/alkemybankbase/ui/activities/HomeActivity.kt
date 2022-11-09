@@ -1,5 +1,7 @@
 package com.Alkemy.alkemybankbase.ui.activities
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -15,6 +17,14 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initFragment()
+
+        val bundle: Bundle? = intent.extras
+        val email = bundle?.getString("email")
+
+
+        val pref: SharedPreferences.Editor = getSharedPreferences(getString(R.string.pref_file), Context.MODE_PRIVATE).edit()
+        pref.putString("email",email)
+        pref.apply()
     }
 
     //Link each icon for the bottom navigation to a fragment
@@ -46,4 +56,13 @@ class HomeActivity : AppCompatActivity() {
             replace(R.id.flFragment, fragment)
             commit()
         }
+//    private fun logOut(){
+//
+//        val pref: SharedPreferences.Editor = getSharedPreferences(getString(R.string.pref_file), Context.MODE_PRIVATE).edit()
+//        pref.clear()
+//        pref.apply()
+//
+//    }
 }
+
+
