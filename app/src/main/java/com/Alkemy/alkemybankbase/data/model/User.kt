@@ -10,10 +10,6 @@ data class User(
     @SerializedName("email")
     var email : String,
     @SerializedName("password")
-    val password : String,
-    @SerializedName("roleId")
-    var roleId : Int,
-    @SerializedName("points")
-    var points : Int,
+    var password : String
 ) {
 }

@@ -2,6 +2,7 @@ package com.Alkemy.alkemybankbase.utils
 
 import com.Alkemy.alkemybankbase.data.remote.ApiService
 import com.Alkemy.alkemybankbase.repository.LoginRepository
+import com.Alkemy.alkemybankbase.repository.SignUpRepository
 import com.Alkemy.alkemybankbase.utils.Constants.BASE_URL
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -18,6 +19,10 @@ object  AppModule {
     @Singleton
     @Provides
     fun provideLoginRepository(apiService: ApiService) = LoginRepository(apiService)
+
+    @Singleton
+    @Provides
+    fun provideSignupRepository(apiService: ApiService) = SignUpRepository(apiService)
 
     @Singleton
     @Provides
