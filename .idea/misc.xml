@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Clivio/AndroidStudioProjects/Skill-Up-Android/app/src/main/res/layout/activity_login.xml" value="0.271875" />
         <entry key="..\:/Skill-Up-Android/app/src/main/res/layout/activity_login.xml" value="0.15715579710144928" />
         <entry key="..\:/Users/santi/Escritorio/Skill-Up-Android/app/src/main/res/layout/activity_home.xml" value="0.2609375" />
+        <entry key="..\:/Users/santi/Escritorio/Skill-Up-Android/app/src/main/res/layout/activity_login.xml" value="0.1697061803444782" />
         <entry key="..\:/Users/santi/Escritorio/Skill-Up-Android/app/src/main/res/layout/activity_main.xml" value="0.18840579710144928" />
+        <entry key="..\:/Users/santi/Escritorio/Skill-Up-Android/app/src/main/res/layout/activity_sign_up.xml" value="0.3489583333333333" />
         <entry key="..\:/Users/santi/Escritorio/Skill-Up-Android/app/src/main/res/layout/fragment_charge_balance.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/santi/Escritorio/Skill-Up-Android/app/src/main/res/layout/fragment_expense.xml" value="0.3489583333333333" />
         <entry key="..\:/Users/santi/Escritorio/Skill-Up-Android/app/src/main/res/layout/fragment_home.xml" value="0.34791666666666665" />
