@@ -13,4 +13,11 @@
     <string name="email_error">Enter a valid Email</string>
     <string name="confirm_password_error">Passwords are not the same</string>
     <string name="password_error">Password must have at least 8 characters, 1 uppercase and 1 number</string>
+
+
+
+
+    <string name="facebook_app_id">534006851460716</string>
+    <string name="fb_login_protocol_scheme">fb534006851460716</string>
+    <string name="facebook_client_token">c506db6051cb53aaceada3730335c0ea</string>
 </resources>

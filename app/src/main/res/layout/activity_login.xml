@@ -118,6 +118,8 @@
         tools:ignore="SpeakableTextPresentCheck"
         android:contentDescription="@string/login_with_gmail" />
 
+
+        app:layout_constraintStart_toStartOf="parent"/>
     <ImageButton
         android:id="@+id/btnFacebook"
         android:layout_width="80dp"
