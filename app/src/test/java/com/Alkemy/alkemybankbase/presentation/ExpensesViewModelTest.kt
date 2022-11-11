@@ -1,12 +1,12 @@
 package com.Alkemy.alkemybankbase.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.Alkemy.alkemybankbase.repository.FakeGastosRepository
+import com.Alkemy.alkemybankbase.repository.FakeExpensesRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestRule
 
-class GastosViewModelTest{
+class ExpensesViewModelTest{
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     //Needed Rule to test LiveData changes
@@ -15,6 +15,6 @@ class GastosViewModelTest{
 
     @Before
     fun setup() {
-        viewModel = ExpensesViewModel(FakeGastosRepository())
+        viewModel = ExpensesViewModel(FakeExpensesRepository())
     }
 }

@@ -1,7 +1,7 @@
 package com.Alkemy.alkemybankbase.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.Alkemy.alkemybankbase.repository.FakeCargaRepository
+import com.Alkemy.alkemybankbase.repository.FakeChargeRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.rules.TestRule
@@ -15,6 +15,6 @@ class ChargeViewModelTest{
 
     @Before
     fun setup() {
-        viewModel = ChargeViewModel(FakeCargaRepository())
+        viewModel = ChargeViewModel(FakeChargeRepository())
     }
 }
