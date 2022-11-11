@@ -1,6 +1,6 @@
 package com.Alkemy.alkemybankbase.ui.activities
 
-import android.content.Context
+
 import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,14 +8,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.Alkemy.alkemybankbase.databinding.ActivitySignUpBinding
 import com.Alkemy.alkemybankbase.presentation.SignUpViewModel
+import com.Alkemy.alkemybankbase.utils.LogBundle
 import com.Alkemy.alkemybankbase.utils.afterTextChanged
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -68,38 +66,21 @@ class SignUpActivity : AppCompatActivity() {
     private fun setupListener() {
         with(binding) {
             btnSignUp.setOnClickListener {
-                var bundle = Bundle()
-                bundle.putString("message", "Sign Up Pressed")
-                firebaseAnalytics.logEvent("register_pressed", bundle)
+                LogBundle.logBundleAnalytics(firebaseAnalytics,"Sign Up Pressed","register_pressed")
                 lifecycleScope.launch {
                     viewModel.createUser(etFirstname.text.toString(),etLastname.text.toString(),etEmail.text.toString(),etPassword.text.toString())
                     if (viewModel.userResponse.email.isNotBlank()) {
                         showDialog("Great!","User was successfully registered")
-                        bundle.putString("message", "Sign Up Succeeded")
-                        firebaseAnalytics.logEvent("sign_up_success", bundle)
+                        LogBundle.logBundleAnalytics(firebaseAnalytics,"Sign Up Succeeded","sign_up_success")
                     } else if(viewModel.userError.isNotBlank()){
                         showAlert("Error",viewModel.userError)
-                        bundle.putString("message", "Sign Up Failed")
-                        firebaseAnalytics.logEvent("sign_up_error", bundle)
+                        LogBundle.logBundleAnalytics(firebaseAnalytics,"Sign Up Failed","sign_up_error")
 
                     }
                 }
-                    //Todo implement function and make call to viewmodel
-                /*    FirebaseAuth.getInstance().createUserWithEmailAndPassword(
-                        binding.etEmail.text.toString(),
-                        binding.etPassword.text.toString()
-
-                    ).addOnCompleteListener {
-                        if (!it.isSuccessful) {
-                            showAlert("Error", "No se pudo registrar el usuario en firebase")
-                        } //todo:Registrarse con viewmodel y api
-                } */
             }
             btnLogin.setOnClickListener {
-                var bundle = Bundle()
-                bundle.putString("message", "Login Pressed")
-                firebaseAnalytics.logEvent("log_in_pressed", bundle)
-
+                LogBundle.logBundleAnalytics(firebaseAnalytics,"Login Pressed","log_in_pressed")
                 navigateToLogin()
             }
             etFirstname.afterTextChanged {

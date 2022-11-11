@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "857151897158-k0gnd6p4pq7b5mdntsd06924b11pf0jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Alkemy.alkemybankbase",
+            "certificate_hash": "54ea8d027021392359ebd44c6b9781ce90c53b70"
+          }
+        },
+        {
+          "client_id": "857151897158-qcgnvqhbech9mq26otj6c3dgj50qdo71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Alkemy.alkemybankbase",
+            "certificate_hash": "03f193410f808c56e223591dc3a038f24824bfe4"
+          }
+        },
+        {
           "client_id": "857151897158-8fb2h8vt0rhn2tq64bikpj2vl42q0vmr.apps.googleusercontent.com",
           "client_type": 3
         }
