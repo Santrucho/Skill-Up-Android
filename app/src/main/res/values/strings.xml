@@ -27,5 +27,7 @@
     <string name="balance">Balance</string>
     <string name="cero">$0.00</string>
     <string name="pref_file">com.Alkemy.alkemybankbase.PREFERENCE_FILE_KEY</string>
-
+    <string name="facebook_app_id">534006851460716</string>
+    <string name="fb_login_protocol_scheme">fb534006851460716</string>
+    <string name="facebook_client_token">c506db6051cb53aaceada3730335c0ea</string>
 </resources>
