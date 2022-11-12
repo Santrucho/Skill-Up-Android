@@ -1,9 +1,14 @@
 package com.Alkemy.alkemybankbase.repository.movement
 
+import com.Alkemy.alkemybankbase.data.model.TransactionsResponse
+import com.Alkemy.alkemybankbase.utils.Resource
+
 interface MovementRepository {
     /***********************************************************
     JUST WRITE EMPTY FUNCTIONS WITH NO REAL IMPLEMENTATIONS
      ************************************************************/
+
+    suspend fun getAllTransactions(auth: String) : Resource<TransactionsResponse>
 
     /*Unit Tests should not have external dependencies.
     In our case we have use injections like this ViewModel <- Repository <- ApiService <- RetrofitInstance
