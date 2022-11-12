@@ -14,7 +14,7 @@ class DefaultExpensesRepository @Inject constructor(private val apiService: ApiS
      ************************************************************/
     override suspend fun addExpense(auth: String, expense: Expense): Resource<Transaction> {
         val resp = try {
-            apiService.addExpense(auth)
+            apiService.addExpense(auth, expense)
         }catch (e:Exception){
             return  Resource.Failure(e)
         }
