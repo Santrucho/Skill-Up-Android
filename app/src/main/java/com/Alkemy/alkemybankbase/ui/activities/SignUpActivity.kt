@@ -9,6 +9,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
+import com.Alkemy.alkemybankbase.data.local.SessionManager
 import com.Alkemy.alkemybankbase.databinding.ActivitySignUpBinding
 import com.Alkemy.alkemybankbase.presentation.SignUpViewModel
 import com.Alkemy.alkemybankbase.utils.LogBundle
@@ -61,6 +62,16 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.isLoading.observe(this) {
             binding.prgbar.visibility = if (it) View.VISIBLE else View.GONE
         }
+        viewModel.isAccountCreated.observe(this) {
+            // call after creating the account
+            if(it)
+                showDialog("Great!","User was successfully registered")
+        }
+        viewModel.token.observe(this) {
+            // create account
+            val  auth = "Bearer $it"
+            viewModel.createAccount(auth)
+        }
     }
 
     private fun setupListener() {
@@ -70,7 +81,8 @@ class SignUpActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     viewModel.createUser(etFirstname.text.toString(),etLastname.text.toString(),etEmail.text.toString(),etPassword.text.toString())
                     if (viewModel.userResponse.email.isNotBlank()) {
-                        showDialog("Great!","User was successfully registered")
+                        //login the user to have token
+                        viewModel.getToken(etEmail.text.toString(), etPassword.text.toString())
                         LogBundle.logBundleAnalytics(firebaseAnalytics,"Sign Up Succeeded","sign_up_success")
                     } else if(viewModel.userError.isNotBlank()){
                         showAlert("Error",viewModel.userError)

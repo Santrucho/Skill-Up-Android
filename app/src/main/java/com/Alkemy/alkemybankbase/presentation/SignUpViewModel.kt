@@ -3,18 +3,31 @@ package com.Alkemy.alkemybankbase.presentation
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.Alkemy.alkemybankbase.R
+import com.Alkemy.alkemybankbase.data.model.LoginInput
+import com.Alkemy.alkemybankbase.data.model.NewAccount
 import com.Alkemy.alkemybankbase.repository.singup.SignUpRepository
 import com.Alkemy.alkemybankbase.data.model.User
 import com.Alkemy.alkemybankbase.data.model.UserResponse
+import com.Alkemy.alkemybankbase.repository.account.AccountRepository
+import com.Alkemy.alkemybankbase.repository.login.LoginRepository
 import com.Alkemy.alkemybankbase.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.IllegalArgumentException
+import java.time.LocalDateTime
 import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(private val signupRepo : SignUpRepository) : ViewModel() {
+class SignUpViewModel @Inject constructor(
+    private val signupRepo: SignUpRepository,
+    private val accountRepo: AccountRepository,
+    private val loginRepo: LoginRepository
+) : ViewModel() {
 
     val firstnameErrorResourceLiveData = MutableLiveData<Int>()
     val lastnameErrorResourceLiveData = MutableLiveData<Int>()
@@ -22,12 +35,20 @@ class SignUpViewModel @Inject constructor(private val signupRepo : SignUpReposit
     val passwordErrorResourceIdLiveData = MutableLiveData<Int>()
     val confirmPasswordErrorResourceIdLiveData = MutableLiveData<Int>()
     val isFormValidLiveData = MutableLiveData<Boolean>()
-    lateinit var userResponse : UserResponse
-    var userError : String = ""
+    lateinit var userResponse: UserResponse
+    var userError: String = ""
     val isLoading = MutableLiveData<Boolean>()
+    val isAccountCreated = MutableLiveData<Boolean>()
+    val token = MutableLiveData<String>()
 
     //Check email & password
-    fun validateForm(firstname:String,lastname:String,email: String, password: String, confirmPassword: String) {
+    fun validateForm(
+        firstname: String,
+        lastname: String,
+        email: String,
+        password: String,
+        confirmPassword: String
+    ) {
         // check if firstname is valid with pattern
         val firstnamePattern = "^[\\w'-,.][^0-9_!¡?÷?¿/\\+=@#\$%ˆ&*(){}|~<>;:[ ]]{2,}\$"
         val patternFn = Pattern.compile(firstnamePattern)
@@ -45,47 +66,89 @@ class SignUpViewModel @Inject constructor(private val signupRepo : SignUpReposit
         // check if passwords are the same
         val isConfirmPasswordValid = password == confirmPassword
 
-        if(!isFirstnameValid){
+        if (!isFirstnameValid) {
             firstnameErrorResourceLiveData.value = R.string.firstname_error
             isFormValidLiveData.value = false
-        }
-        else if(!isLastnameValid){
+        } else if (!isLastnameValid) {
             lastnameErrorResourceLiveData.value = R.string.lastname_error
             isFormValidLiveData.value = false
-        }
-        else if (!isEmailValid){
+        } else if (!isEmailValid) {
             emailErrorResourceIdLiveData.value = R.string.email_error
             isFormValidLiveData.value = false
-        }else if (!isPasswordValid){
+        } else if (!isPasswordValid) {
             passwordErrorResourceIdLiveData.value = R.string.password_error
             isFormValidLiveData.value = false
-        }else if (!isConfirmPasswordValid){
+        } else if (!isConfirmPasswordValid) {
             confirmPasswordErrorResourceIdLiveData.value = R.string.confirm_password_error
             isFormValidLiveData.value = false
-        }else{
+        } else {
             isFormValidLiveData.value = true
         }
 
     }
 
-    suspend fun createUser(firstname:String, lastname:String,email:String,password:String){
+    suspend fun createUser(firstname: String, lastname: String, email: String, password: String) {
         var userResult: Resource<UserResponse>
         isLoading.value = true
-        val user = User(firstname = firstname, lastname = lastname, email = email,
-            password = password)
-        userResult = signupRepo.createUser(user =  user)
+        val user = User(
+            firstname = firstname, lastname = lastname, email = email,
+            password = password
+        )
+        userResult = signupRepo.createUser(user = user)
         userResponse = UserResponse()
-        when(userResult){
+        when (userResult) {
             is Resource.Success -> {
                 userResponse = userResult.data
                 //SessionManager.saveAuthToken(context, userResult.data.accessToken)
-                isLoading.value = false
             }
             is Resource.Failure -> {
                 userError = userResult.toString()
                 isLoading.value = false
             }
             else -> throw IllegalArgumentException("Illegal Result")
+        }
+    }
+
+    fun createAccount(auth: String) {
+        viewModelScope.launch(Dispatchers.Main) {
+            val response = withContext(Dispatchers.IO){
+                //todo set after creating the UI to add money to 0
+                val money = 1000
+                val newAccount = NewAccount(userResponse.id, LocalDateTime.now().toString(),money)
+                accountRepo.createAccount(auth,newAccount)
+            }
+            when(response) {
+                is Resource.Failure -> {
+                    isLoading.value = false
+                    isAccountCreated.value = false
+                    userError = "Please try again"
+                }
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    isLoading.value = false
+                    isAccountCreated.value = true
+                }
+            }
+        }
+    }
+
+    fun getToken(email: String, password: String) {
+        viewModelScope.launch(Dispatchers.Main) {
+            val response = withContext(Dispatchers.IO){
+                val loginInput = LoginInput(email, password)
+                loginRepo.loginUser(loginInput)
+            }
+            when(response) {
+                is Resource.Failure -> {
+                    isLoading.value = false
+                    isAccountCreated.value = false
+                    userError = "Please try again"
+                }
+                is Resource.Loading -> {}
+                is Resource.Success -> {
+                    token.value = response.data.accessToken
+                }
+            }
         }
     }
 
