@@ -10,22 +10,22 @@ import retrofit2.http.POST
 interface ApiService {
 
     @POST("users")
-    suspend fun addUser(@Body user: User) : UserResponse
+    suspend fun addUser(@Body user: User): UserResponse
 
     @POST("auth/login")
-    suspend fun loginUser(@Body loginInput: LoginInput) : LoginResponse
+    suspend fun loginUser(@Body loginInput: LoginInput): LoginResponse
 
     @GET("transactions")
-    suspend fun getAllTransactions(@Header("Authorization") auth: String) : TransactionsResponse
+    suspend fun getAllTransactions(@Header("Authorization") auth: String): TransactionsResponse
 
     @GET("accounts/me")
     suspend fun getAllAccounts(@Header("Authorization") auth: String): AccountsResponse
 
-
-
-
-
-
+    @POST("accounts")
+    suspend fun createNewAccount(
+        @Header("Authorization") auth: String,
+        @Body newAccount: NewAccount
+    ): NewAccountResponse
 
     @POST("transactions")
     suspend fun addExpense(

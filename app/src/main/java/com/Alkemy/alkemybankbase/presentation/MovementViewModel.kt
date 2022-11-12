@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.Alkemy.alkemybankbase.R
 import com.Alkemy.alkemybankbase.data.model.Account
+import com.Alkemy.alkemybankbase.data.model.AccountsResponse
 import com.Alkemy.alkemybankbase.data.model.Transaction
 import com.Alkemy.alkemybankbase.repository.account.AccountRepository
 import com.Alkemy.alkemybankbase.repository.movement.MovementRepository
+import com.Alkemy.alkemybankbase.utils.Constants.TYPE_PAYMENT
+import com.Alkemy.alkemybankbase.utils.Constants.TYPE_TOPUP
 import com.Alkemy.alkemybankbase.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,11 +24,11 @@ class MovementViewModel @Inject constructor(
     private val accountRepo: AccountRepository
 ) : ViewModel() {
     val allTransactionLiveData = MutableLiveData<List<Transaction>>()
-    val allAccountLiveData = MutableLiveData<List<Account>>()
+    val balance = MutableLiveData<String>()
     val errorLiveData = MutableLiveData<Int>()
     val isLoadingLiveData = MutableLiveData<Boolean>()
 
-    fun getAllTransactions(auth: String) {
+    fun getAllTransactions(auth: String, account: Account? = null) {
         isLoadingLiveData.value = true
         viewModelScope.launch(Dispatchers.Main) {
             val response = withContext(Dispatchers.IO) {
@@ -42,7 +45,23 @@ class MovementViewModel @Inject constructor(
                 }
                 is Resource.Success -> {
                     isLoadingLiveData.value = false
-                    allTransactionLiveData.value = response.data.transactions
+                    val transactionList = response.data.transactions
+                    //calculate the balance
+                    var payments = 0
+                    var topUp = 0
+                    transactionList.filter { it.type == TYPE_PAYMENT }.forEach { trans ->
+                        payments += trans.amount.toIntOrNull() ?: 0
+                    }
+
+                    transactionList.filter { it.type == TYPE_TOPUP }.forEach { trans ->
+                        topUp += trans.amount.toIntOrNull() ?: 0
+                    }
+                    account?.let {
+                        val money = it.money.toIntOrNull() ?: 0
+                        val newBalance = money + topUp - payments
+                        balance.value = newBalance.toString()
+                    }
+                    allTransactionLiveData.value = transactionList
 
                 }
             }
@@ -66,7 +85,7 @@ class MovementViewModel @Inject constructor(
                 }
                 is Resource.Success ->{
                     isLoadingLiveData.value = false
-                    allAccountLiveData.value = response.data ?: emptyList()
+                    getAllTransactions(auth, response.data.firstOrNull())
                 }
             }
         }
@@ -74,7 +93,6 @@ class MovementViewModel @Inject constructor(
 
     fun retry(auth: String) {
         getAllAccounts(auth)
-        getAllTransactions(auth)
 
     }
 }

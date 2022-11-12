@@ -1,7 +1,6 @@
 package com.Alkemy.alkemybankbase.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import com.Alkemy.alkemybankbase.databinding.FragmentHomeBinding
 import com.Alkemy.alkemybankbase.presentation.MovementViewModel
 import com.Alkemy.alkemybankbase.ui.adapters.TransactionAdapter
 import com.Alkemy.alkemybankbase.R
+import com.Alkemy.alkemybankbase.utils.Constants.TYPE_PAYMENT
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,7 +39,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
          auth = "Bearer ${SessionManager.getToken(requireContext())}"
-        viewModel.getAllTransactions(auth)
         viewModel.getAllAccounts(auth)
         initRecyclerView()
         setupObservers()
@@ -66,7 +65,7 @@ class HomeFragment : Fragment() {
                 TransactionAdapter(transactionList.take(5)) { transaction ->
                     onTransactionSelected(transaction)
                 }
-
+            binding.tvEmptyTransaction.isVisible = transactionList.isEmpty()
         }
         viewModel.errorLiveData.observe(viewLifecycleOwner) { resId ->
             //show error message
@@ -76,9 +75,8 @@ class HomeFragment : Fragment() {
             binding.tvError.text = getString(resId)
 
         }
-        viewModel.allAccountLiveData.observe(viewLifecycleOwner) {
-            val balance = "$${it.first().money}"
-            binding.tvAmount.text = balance
+        viewModel.balance.observe(viewLifecycleOwner) { balance ->
+            binding.tvAmount.text = "$".plus(balance)
         }
     }
 
