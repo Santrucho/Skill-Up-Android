@@ -26,4 +26,10 @@ interface ApiService {
         @Header("Authorization") auth: String,
         @Body newAccount: NewAccount
     ): NewAccountResponse
+
+    @POST("transactions")
+    suspend fun addExpense(
+        @Header("Authorization") auth: String,
+        @Body expense: Expense
+    ): Transaction
 }
