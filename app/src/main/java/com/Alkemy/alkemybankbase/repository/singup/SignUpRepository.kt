@@ -1,6 +1,5 @@
 package com.Alkemy.alkemybankbase.repository.singup
 
-import com.Alkemy.alkemybankbase.data.model.LoginResponse
 import com.Alkemy.alkemybankbase.data.model.User
 import com.Alkemy.alkemybankbase.data.model.UserResponse
 import com.Alkemy.alkemybankbase.utils.Resource

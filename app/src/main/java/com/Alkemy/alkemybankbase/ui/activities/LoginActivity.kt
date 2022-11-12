@@ -20,9 +20,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import android.widget.Toast
 import com.Alkemy.alkemybankbase.databinding.ActivityLoginBinding
 import com.Alkemy.alkemybankbase.utils.LogBundle
-import com.facebook.*
-import com.facebook.login.LoginManager
-import com.facebook.login.LoginResult
+
 import com.google.firebase.auth.FacebookAuthProvider
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

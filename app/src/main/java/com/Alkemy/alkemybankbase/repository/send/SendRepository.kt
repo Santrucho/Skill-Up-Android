@@ -1,9 +1,15 @@
 package com.Alkemy.alkemybankbase.repository.send
 
+import com.Alkemy.alkemybankbase.data.model.Send
+import com.Alkemy.alkemybankbase.data.model.SendResponse
+import com.Alkemy.alkemybankbase.utils.Resource
+
 interface SendRepository {
     /***********************************************************
     JUST WRITE EMPTY FUNCTIONS WITH NO REAL IMPLEMENTATIONS
      ************************************************************/
+
+    suspend fun sendUser(send: Send) : Resource<SendResponse>
 
     /*Unit Tests should not have external dependencies.
     In our case we have use injections like this ViewModel <- Repository <- ApiService <- RetrofitInstance
