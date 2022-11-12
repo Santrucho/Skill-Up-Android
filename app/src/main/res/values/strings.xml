@@ -30,4 +30,6 @@
     <string name="facebook_app_id">534006851460716</string>
     <string name="fb_login_protocol_scheme">fb534006851460716</string>
     <string name="facebook_client_token">c506db6051cb53aaceada3730335c0ea</string>
+    <string name="no_internet">No internet connection. Please connect to internet and retry.</string>
+    <string name="retry">Retry</string>
 </resources>

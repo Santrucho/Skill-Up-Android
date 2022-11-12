@@ -2,6 +2,8 @@ package com.Alkemy.alkemybankbase.utils
 
 import com.Alkemy.alkemybankbase.data.remote.ApiService
 import com.Alkemy.alkemybankbase.repository.*
+import com.Alkemy.alkemybankbase.repository.account.AccountRepository
+import com.Alkemy.alkemybankbase.repository.account.DefaultAccountRepository
 import com.Alkemy.alkemybankbase.repository.charge.ChargeRepository
 import com.Alkemy.alkemybankbase.repository.charge.DefaultChargeRepository
 import com.Alkemy.alkemybankbase.repository.expense.ExpensesRepository
@@ -50,6 +52,10 @@ object  AppModule {
     @Singleton
     @Provides
     fun provideMovementRepository(apiService: ApiService) = DefaultMovementRepository(apiService) as MovementRepository
+
+    @Singleton
+    @Provides
+    fun provideAccountRepository(apiService: ApiService) = DefaultAccountRepository(apiService) as AccountRepository
 
     @Singleton
     @Provides
