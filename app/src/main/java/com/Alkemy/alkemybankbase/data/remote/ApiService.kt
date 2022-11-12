@@ -20,4 +20,7 @@ interface ApiService {
 
     @GET("accounts/me")
     suspend fun getAllAccounts(@Header("Authorization") auth: String): AccountsResponse
+
+    @POST("transactions")
+    suspend fun addExpense(@Header("Authorization") auth: String): Transaction
 }
