@@ -1,7 +1,7 @@
 package com.Alkemy.alkemybankbase.repository.singup
 
-import com.Alkemy.alkemybankbase.data.model.User
-import com.Alkemy.alkemybankbase.data.model.UserResponse
+import com.Alkemy.alkemybankbase.data.model.user.User
+import com.Alkemy.alkemybankbase.data.model.user.UserResponse
 import com.Alkemy.alkemybankbase.data.remote.ApiService
 import com.Alkemy.alkemybankbase.utils.Resource
 import dagger.hilt.android.scopes.ActivityScoped

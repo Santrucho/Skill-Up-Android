@@ -32,4 +32,8 @@
     <string name="facebook_client_token">c506db6051cb53aaceada3730335c0ea</string>
     <string name="no_internet">No internet connection. Please connect to internet and retry.</string>
     <string name="retry">Retry</string>
+    <string name="amount">Monto</string>
+    <string name="chargeBalance">Cargar saldo</string>
+    <string name="amount_error">Ingrese un monto mayor que cero</string>
+    <string name="concept_error">El limite de caracteres es de 20</string>
 </resources>

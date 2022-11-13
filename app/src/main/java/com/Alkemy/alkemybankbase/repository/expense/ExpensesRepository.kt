@@ -1,6 +1,6 @@
 package com.Alkemy.alkemybankbase.repository.expense
 
-import com.Alkemy.alkemybankbase.data.model.Expense
+import com.Alkemy.alkemybankbase.data.model.expense.Expense
 import com.Alkemy.alkemybankbase.data.model.Transaction
 import com.Alkemy.alkemybankbase.utils.Resource
 

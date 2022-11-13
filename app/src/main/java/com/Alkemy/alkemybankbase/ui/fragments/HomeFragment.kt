@@ -1,6 +1,7 @@
 package com.Alkemy.alkemybankbase.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +39,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-         auth = "Bearer ${SessionManager.getToken(requireContext())}"
+         auth = "${SessionManager.getToken(requireContext())}"
+        Log.d("5555555555555555555555555555555555555555555",auth.toString())
         viewModel.getAllAccounts(auth)
         initRecyclerView()
         setupObservers()

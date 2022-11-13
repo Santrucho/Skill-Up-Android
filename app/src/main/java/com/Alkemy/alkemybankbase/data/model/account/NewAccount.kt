@@ -1,4 +1,4 @@
-package com.Alkemy.alkemybankbase.data.model
+package com.Alkemy.alkemybankbase.data.model.account
 
 data class NewAccount(
     val userId: Int,

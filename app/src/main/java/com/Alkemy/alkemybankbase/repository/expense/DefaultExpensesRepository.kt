@@ -1,6 +1,6 @@
 package com.Alkemy.alkemybankbase.repository.expense
 
-import com.Alkemy.alkemybankbase.data.model.Expense
+import com.Alkemy.alkemybankbase.data.model.expense.Expense
 import com.Alkemy.alkemybankbase.data.model.Transaction
 import com.Alkemy.alkemybankbase.data.remote.ApiService
 import com.Alkemy.alkemybankbase.utils.Resource
@@ -14,7 +14,7 @@ class DefaultExpensesRepository @Inject constructor(private val apiService: ApiS
      ************************************************************/
     override suspend fun addExpense(auth: String, expense: Expense): Resource<Transaction> {
         val resp = try {
-            apiService.addExpense(auth)
+            apiService.addExpense(auth,expense)
         }catch (e:Exception){
             return  Resource.Failure(e)
         }
