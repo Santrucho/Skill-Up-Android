@@ -35,15 +35,12 @@ class SendFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentSendBinding.inflate(inflater,container,false)
-        auth = SessionManager.getToken(requireContext()).toString()
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         setupObservers()
         setupListeners()
-        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+
+        auth = "${SessionManager.getToken(requireContext())}"
+        return binding.root
     }
 
     private fun setupListeners() {
@@ -65,9 +62,9 @@ class SendFragment : Fragment() {
             etAmount.afterTextChanged {
                 if (!etAmount.text.isNullOrBlank()) {
                     viewModel.validateForm(
-                        etDestination.text.toString().toInt(),
+                        etDestination.text.toString().toIntOrNull() ?: 0,
                         etConcept.text.toString(),
-                        etAmount.text.toString().toInt()
+                        etAmount.text.toString().toIntOrNull() ?: 0
                     )
                 }
             }

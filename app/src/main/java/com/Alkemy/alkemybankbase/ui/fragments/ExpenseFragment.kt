@@ -36,16 +36,12 @@ class ExpenseFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentExpenseBinding.inflate(inflater, container, false)
-        auth = SessionManager.getToken(requireContext()).toString()
-        return binding.root
-    }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         setupObservers()
         setupListeners()
-        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+
+        auth = "${SessionManager.getToken(requireContext())}"
+        return binding.root
     }
 
     private fun setupListeners() {
