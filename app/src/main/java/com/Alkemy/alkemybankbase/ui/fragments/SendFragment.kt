@@ -95,14 +95,14 @@ class SendFragment : Fragment() {
             binding.btnSend.isEnabled = it
         }
 
-        viewModel.conceptErrorResourceLiveData.observe(viewLifecycleOwner) {
-            binding.etConcept.error = it.toString()
+        viewModel.conceptErrorResourceLiveData.observe(viewLifecycleOwner) { resId ->
+            binding.etConcept.error = getString(resId)
         }
-        viewModel.amountErrorResourceLiveData.observe(viewLifecycleOwner) {
-            binding.etAmount.error = it.toString()
+        viewModel.amountErrorResourceLiveData.observe(viewLifecycleOwner) { resId ->
+            binding.etAmount.error = getString(resId)
         }
-        viewModel.toAccountIdErrorResourceLiveData.observe(viewLifecycleOwner) {
-            binding.etDestination.error = it.toString()
+        viewModel.toAccountIdErrorResourceLiveData.observe(viewLifecycleOwner) { resId ->
+            binding.etDestination.error = getString(resId)
         }
         viewModel.isLoading.observe(viewLifecycleOwner) {
             // show loading and hide ui
