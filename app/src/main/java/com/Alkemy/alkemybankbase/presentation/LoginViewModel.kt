@@ -1,13 +1,17 @@
 package com.Alkemy.alkemybankbase.presentation
 
 import android.content.Context
+import android.util.Log
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.Alkemy.alkemybankbase.R
+import com.Alkemy.alkemybankbase.data.local.AccountManager
 import com.Alkemy.alkemybankbase.data.local.SessionManager
-import com.Alkemy.alkemybankbase.data.model.LoginInput
-import com.Alkemy.alkemybankbase.data.model.LoginResponse
+import com.Alkemy.alkemybankbase.data.model.login.LoginInput
+import com.Alkemy.alkemybankbase.data.model.login.LoginResponse
+import com.Alkemy.alkemybankbase.repository.account.AccountRepository
 import com.Alkemy.alkemybankbase.utils.Resource
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,14 +21,18 @@ import javax.inject.Inject
 import com.Alkemy.alkemybankbase.repository.login.LoginRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepo : LoginRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginRepo : LoginRepository,private val accountRepo:AccountRepository) : ViewModel() {
     val emailErrorResourceIdLiveData = MutableLiveData<Int>()
     val passwordErrorResourceIdLiveData = MutableLiveData<Int>()
     val isFormValidLiveData = MutableLiveData<Boolean>()
     lateinit var loginResponse : LoginResponse
     var loginError : String = ""
+    var accountsError = MutableLiveData<Int>()
     val isLoading = MutableLiveData<Boolean>()
 
 
@@ -58,14 +66,39 @@ class LoginViewModel @Inject constructor(private val loginRepo : LoginRepository
         when(loginResult){
             is Resource.Success -> {
                 loginResponse = loginResult.data
-                SessionManager.saveAuthToken(context, loginResult.data.accessToken)
+                SessionManager.saveAuthToken(context, "Bearer ${loginResult.data.accessToken}")
                 isLoading.value = false
+                getAllAccounts(context)
             }
             is Resource.Failure -> {
                 loginError = loginResult.toString()
                 isLoading.value = false
             }
             else -> throw IllegalArgumentException("Illegal Result")
+        }
+    }
+
+    fun getAllAccounts(context:Context){
+        isLoading.value = true
+        viewModelScope.launch(Dispatchers.Main){
+            val response = withContext(Dispatchers.IO){
+                accountRepo.getAllAccounts("Bearer ${loginResponse.accessToken}")
+            }
+            when(response){
+                is Resource.Failure -> {
+                    isLoading.value = false
+                    accountsError.value = R.string.no_internet
+                }
+                is Resource.Loading -> {
+
+                }
+                is Resource.Success ->{
+                    val userId = response.data.first().userId
+                    val accountId = response.data.first().id
+                    isLoading.value = false
+                    AccountManager.saveIds(context,userId.toString(),accountId.toString())
+                }
+            }
         }
     }
 

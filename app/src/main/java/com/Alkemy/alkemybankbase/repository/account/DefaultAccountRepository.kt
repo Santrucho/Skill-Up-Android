@@ -1,6 +1,8 @@
 package com.Alkemy.alkemybankbase.repository.account
 
 import com.Alkemy.alkemybankbase.data.model.*
+import com.Alkemy.alkemybankbase.data.model.account.NewAccount
+import com.Alkemy.alkemybankbase.data.model.account.NewAccountResponse
 import com.Alkemy.alkemybankbase.data.remote.ApiService
 import com.Alkemy.alkemybankbase.utils.Resource
 import dagger.hilt.android.scopes.ActivityScoped

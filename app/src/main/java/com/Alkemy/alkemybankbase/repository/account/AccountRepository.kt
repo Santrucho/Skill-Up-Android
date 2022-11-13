@@ -2,8 +2,8 @@ package com.Alkemy.alkemybankbase.repository.account
 
 
 import com.Alkemy.alkemybankbase.data.model.AccountsResponse
-import com.Alkemy.alkemybankbase.data.model.NewAccount
-import com.Alkemy.alkemybankbase.data.model.NewAccountResponse
+import com.Alkemy.alkemybankbase.data.model.account.NewAccount
+import com.Alkemy.alkemybankbase.data.model.account.NewAccountResponse
 import com.Alkemy.alkemybankbase.utils.Resource
 
 interface AccountRepository {

@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.Alkemy.alkemybankbase.R
-import com.Alkemy.alkemybankbase.data.model.LoginInput
-import com.Alkemy.alkemybankbase.data.model.NewAccount
+import com.Alkemy.alkemybankbase.data.model.login.LoginInput
+import com.Alkemy.alkemybankbase.data.model.account.NewAccount
 import com.Alkemy.alkemybankbase.repository.singup.SignUpRepository
-import com.Alkemy.alkemybankbase.data.model.User
-import com.Alkemy.alkemybankbase.data.model.UserResponse
+import com.Alkemy.alkemybankbase.data.model.user.User
+import com.Alkemy.alkemybankbase.data.model.user.UserResponse
 import com.Alkemy.alkemybankbase.repository.account.AccountRepository
 import com.Alkemy.alkemybankbase.repository.login.LoginRepository
 import com.Alkemy.alkemybankbase.utils.Resource
@@ -113,8 +113,7 @@ class SignUpViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             val response = withContext(Dispatchers.IO){
                 //todo set after creating the UI to add money to 0
-                val money = 1000
-                val newAccount = NewAccount(userResponse.id, LocalDateTime.now().toString(),money)
+                val newAccount = NewAccount(userResponse.id, LocalDateTime.now().toString())
                 accountRepo.createAccount(auth,newAccount)
             }
             when(response) {

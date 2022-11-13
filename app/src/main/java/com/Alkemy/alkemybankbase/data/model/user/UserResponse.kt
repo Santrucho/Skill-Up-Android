@@ -1,4 +1,4 @@
-package com.Alkemy.alkemybankbase.data.model
+package com.Alkemy.alkemybankbase.data.model.user
 
 data class UserResponse(
     val code : Int = 0,

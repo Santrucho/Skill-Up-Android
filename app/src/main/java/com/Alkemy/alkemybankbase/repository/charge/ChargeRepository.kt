@@ -1,10 +1,14 @@
 package com.Alkemy.alkemybankbase.repository.charge
 
+import com.Alkemy.alkemybankbase.data.model.topup.TopupInput
+import com.Alkemy.alkemybankbase.data.model.topup.TopupResponse
+import com.Alkemy.alkemybankbase.utils.Resource
+
 interface ChargeRepository {
     /***********************************************************
         JUST WRITE EMPTY FUNCTIONS WITH NO REAL IMPLEMENTATIONS
      ************************************************************/
-
+        suspend fun topUp(auth:String, topupInput: TopupInput, id:Int) : Resource<TopupResponse>
     /*Unit Tests should not have external dependencies.
     In our case we have use injections like this ViewModel <- Repository <- ApiService <- RetrofitInstance
     Which means that to write a test for a form validation function from the viewmodel,
