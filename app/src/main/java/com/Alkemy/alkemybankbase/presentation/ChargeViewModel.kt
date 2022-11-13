@@ -36,7 +36,7 @@ class ChargeViewModel @Inject constructor(private val chargeRepo : ChargeReposit
         if (!amountValid){
             amountErrorResourceLiveData.value = R.string.amount_error
             isFormValidLiveData.value = false
-        }else if(!isConceptValid && concept.length in 1..19 ){
+        }else if(!isConceptValid || concept.length !in 1..19){
             conceptErrorResourceLiveData.value = R.string.concept_error
             isFormValidLiveData.value = false
         }else{
