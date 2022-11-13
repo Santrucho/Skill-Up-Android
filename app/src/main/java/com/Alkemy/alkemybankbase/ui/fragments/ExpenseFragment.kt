@@ -85,25 +85,31 @@ class ExpenseFragment : Fragment() {
                 }
             }
             etAmount.afterTextChanged {
-                viewModel.validateForm(
-                    etConcept.text.toString(),
-                    etAmount.text.toString().toInt(),
-                    etDestination.text.toString().toInt(),
-                )
+                if (!etAmount.text.isNullOrBlank()) {
+                    viewModel.validateForm(
+                        etConcept.text.toString(),
+                        etAmount.text.toString().toInt(),
+                        etDestination.text.toString().toInt(),
+                    )
+                }
             }
             etConcept.afterTextChanged {
-                viewModel.validateForm(
-                    etConcept.text.toString(),
-                    etAmount.text.toString().toInt(),
-                    etDestination.text.toString().toInt(),
-                )
+                if (!etConcept.text.isNullOrBlank()) {
+                    viewModel.validateForm(
+                        etConcept.text.toString(),
+                        etAmount.text.toString().toInt(),
+                        etDestination.text.toString().toInt(),
+                    )
+                }
             }
             etDestination.afterTextChanged {
-                viewModel.validateForm(
-                    etConcept.text.toString(),
-                    etAmount.text.toString().toInt(),
-                    etDestination.text.toString().toInt(),
-                )
+                if (!etDestination.text.isNullOrBlank()) {
+                    viewModel.validateForm(
+                        etConcept.text.toString(),
+                        etAmount.text.toString().toInt(),
+                        etDestination.text.toString().toInt(),
+                    )
+                }
             }
             btnAddExpense.isEnabled = false
         }

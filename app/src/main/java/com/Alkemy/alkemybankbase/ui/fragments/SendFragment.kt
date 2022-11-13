@@ -61,26 +61,33 @@ class SendFragment : Fragment() {
                     }
                 }
             }
+
             etAmount.afterTextChanged {
-                viewModel.validateForm(
-                    etDestination.text.toString().toInt(),
-                    etConcept.text.toString(),
-                    etAmount.text.toString().toInt()
-                )
+                if (!etAmount.text.isNullOrBlank()) {
+                    viewModel.validateForm(
+                        etDestination.text.toString().toInt(),
+                        etConcept.text.toString(),
+                        etAmount.text.toString().toInt()
+                    )
+                }
             }
             etConcept.afterTextChanged {
-                viewModel.validateForm(
-                    etDestination.text.toString().toInt(),
-                    etConcept.text.toString(),
-                    etAmount.text.toString().toInt()
-                )
+                if (!etConcept.text.isNullOrBlank()) {
+                    viewModel.validateForm(
+                        etDestination.text.toString().toInt(),
+                        etConcept.text.toString(),
+                        etAmount.text.toString().toInt()
+                    )
+                }
             }
             etDestination.afterTextChanged {
-                viewModel.validateForm(
-                    etDestination.text.toString().toInt(),
-                    etConcept.text.toString(),
-                    etAmount.text.toString().toInt()
-                )
+                if (!etDestination.text.isNullOrBlank()) {
+                    viewModel.validateForm(
+                        etDestination.text.toString().toInt(),
+                        etConcept.text.toString(),
+                        etAmount.text.toString().toInt()
+                    )
+                }
             }
             btnSend.isEnabled = false
         }
