@@ -1,5 +1,6 @@
 package com.Alkemy.alkemybankbase.presentation
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,6 +31,7 @@ class MovementViewModel @Inject constructor(
 
     fun getAllTransactions(auth: String, account: Account? = null) {
         isLoadingLiveData.value = true
+        balance.value = 0.toString()
         viewModelScope.launch(Dispatchers.Main) {
             val response = withContext(Dispatchers.IO) {
                 movementRepo.getAllTransactions(auth)
@@ -52,13 +54,12 @@ class MovementViewModel @Inject constructor(
                     transactionList.filter { it.type == TYPE_PAYMENT }.forEach { trans ->
                         payments += trans.amount.toIntOrNull() ?: 0
                     }
-
                     transactionList.filter { it.type == TYPE_TOPUP }.forEach { trans ->
                         topUp += trans.amount.toIntOrNull() ?: 0
                     }
                     account?.let {
-                        val money = it.money.toIntOrNull() ?: 0
-                        val newBalance = money + topUp - payments
+                        val newBalance = topUp - payments
+
                         balance.value = newBalance.toString()
                     }
                     allTransactionLiveData.value = transactionList
@@ -78,7 +79,6 @@ class MovementViewModel @Inject constructor(
                 is Resource.Failure -> {
                     isLoadingLiveData.value = false
                     errorLiveData.value = R.string.no_internet
-
                 }
                 is Resource.Loading -> {
 

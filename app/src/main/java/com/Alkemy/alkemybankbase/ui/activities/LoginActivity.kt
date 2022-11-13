@@ -90,6 +90,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.isLoading.observe(this) {
             binding.prgbar.visibility = if (it) View.VISIBLE else View.GONE
         }
+
     }
 
     private fun setupListeners() {
@@ -102,6 +103,7 @@ class LoginActivity : AppCompatActivity() {
                     if (viewModel.loginResponse.accessToken.isNotBlank()) {
                         LogBundle.logBundleAnalytics(firebaseAnalytics,"Login Succeeded","log_in_success")
                         navigateToHome()
+
                     } else if(viewModel.loginError.isNotBlank()){
                         //TODO: Show AlertDialog
                         showAlert("Error",viewModel.loginError)

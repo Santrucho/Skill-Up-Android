@@ -1,7 +1,7 @@
 package com.Alkemy.alkemybankbase.repository.login
 
-import com.Alkemy.alkemybankbase.data.model.LoginInput
-import com.Alkemy.alkemybankbase.data.model.LoginResponse
+import com.Alkemy.alkemybankbase.data.model.login.LoginInput
+import com.Alkemy.alkemybankbase.data.model.login.LoginResponse
 import com.Alkemy.alkemybankbase.utils.Resource
 
 interface LoginRepository {
