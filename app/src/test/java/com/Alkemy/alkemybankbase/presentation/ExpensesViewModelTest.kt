@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.Alkemy.alkemybankbase.repository.FakeExpensesRepository
 import com.Alkemy.alkemybankbase.R
 import com.google.common.truth.Truth
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

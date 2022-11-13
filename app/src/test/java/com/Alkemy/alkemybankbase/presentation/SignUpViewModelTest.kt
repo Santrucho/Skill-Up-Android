@@ -5,9 +5,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.Alkemy.alkemybankbase.repository.FakeAccountRepository
 import com.Alkemy.alkemybankbase.repository.FakeLoginRepository
 import com.Alkemy.alkemybankbase.repository.FakeSignUpRepository
-import com.Alkemy.alkemybankbase.repository.account.AccountRepository
-import com.Alkemy.alkemybankbase.repository.login.LoginRepository
-import com.Alkemy.alkemybankbase.repository.signup.SignUpRepository
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
 import org.junit.Test

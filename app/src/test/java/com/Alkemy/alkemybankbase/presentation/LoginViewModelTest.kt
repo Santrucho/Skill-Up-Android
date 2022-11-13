@@ -5,7 +5,6 @@ import com.Alkemy.alkemybankbase.R
 import com.Alkemy.alkemybankbase.repository.FakeAccountRepository
 import com.Alkemy.alkemybankbase.repository.FakeLoginRepository
 import com.google.common.truth.Truth
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

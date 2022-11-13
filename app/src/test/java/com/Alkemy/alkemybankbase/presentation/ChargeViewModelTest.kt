@@ -58,7 +58,7 @@ class ChargeViewModelTest{
     //In the following tests, isFormValidLiveData's value is false due to specific reasons, hence
     //the need to assert the specific vals with their correspondent string error messages
     @Test
-    fun validateForm_invalidAmount_chargeFails(){
+    fun validateForm_negativeAmount_chargeFails(){
         viewModel.validateForm(
             -1, "Deposito"
         )
@@ -73,6 +73,14 @@ class ChargeViewModelTest{
 //        )
 //        Truth.assertThat(viewModel.currencyErrorResourceIdLiveData.value).isEqualTo(R.string.currency_error)
 //    }
+
+    @Test
+    fun validateForm_tooLongConcept_expenseFails(){
+        viewModel.validateForm(
+            200, "Y aserejé-ja-dejé, De jebe tu de jebere seibiunouva majavi an de bugui an de güididípi"
+        )
+        Truth.assertThat(viewModel.conceptErrorResourceLiveData.value).isEqualTo(R.string.concept_error)
+    }
 
     @Test
     fun validateForm_correctInput_chargeSuccess(){
