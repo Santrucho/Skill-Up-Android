@@ -32,4 +32,7 @@
     <string name="facebook_client_token">c506db6051cb53aaceada3730335c0ea</string>
     <string name="no_internet">No internet connection. Please connect to internet and retry.</string>
     <string name="retry">Retry</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="amount">Amount</string>
+    <string name="concept">Concept</string>
 </resources>
