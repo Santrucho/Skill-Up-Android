@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.Alkemy.alkemybankbase.data.local.SessionManager
 import com.Alkemy.alkemybankbase.databinding.FragmentSendBinding
 import com.Alkemy.alkemybankbase.presentation.SendViewModel
 import com.Alkemy.alkemybankbase.utils.LogBundle
@@ -25,6 +26,7 @@ class SendFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: SendViewModel by viewModels()
     private lateinit var firebaseAnalytics: FirebaseAnalytics
+    private lateinit var auth: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +36,7 @@ class SendFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentSendBinding.inflate(inflater,container,false)
         firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+        auth = SessionManager.getToken(requireContext()).toString()
         setupObservers()
         setupListener()
         return binding.root
@@ -43,7 +46,7 @@ class SendFragment : Fragment() {
             btnSend.setOnClickListener {
                 LogBundle.logBundleAnalytics(firebaseAnalytics,"Send Pressed","enviar_pressed")
                 lifecycleScope.launch {
-                    viewModel.send("auth",etDestination.text.toString().toInt(),etConcept.text.toString(),etAmount.text.toString().toInt())
+                    viewModel.send(auth,etDestination.text.toString().toInt(),etConcept.text.toString(),etAmount.text.toString().toInt())
                     if (viewModel.sendResponse.status==200) {
                         LogBundle.logBundleAnalytics(firebaseAnalytics,"Send Succeeded","enviar_dinero_success")
                         showDialog("Aceptar", "Envio de dinero exitoso")
