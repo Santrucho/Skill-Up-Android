@@ -16,6 +16,7 @@ import com.Alkemy.alkemybankbase.databinding.FragmentChargeBalanceBinding
 import com.Alkemy.alkemybankbase.presentation.ChargeViewModel
 import com.Alkemy.alkemybankbase.ui.activities.HomeActivity
 import com.Alkemy.alkemybankbase.utils.afterTextChanged
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -25,6 +26,7 @@ class ChargeBalanceFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ChargeViewModel by viewModels()
     private lateinit var auth:String
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +40,10 @@ class ChargeBalanceFragment : Fragment() {
         setupListeners()
 
         auth = "${SessionManager.getToken(requireContext())}"
+
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
         return binding.root
+
     }
 
     private fun setupObservers() {

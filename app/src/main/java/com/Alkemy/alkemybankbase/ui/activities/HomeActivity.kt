@@ -9,6 +9,7 @@ import com.Alkemy.alkemybankbase.R
 import com.Alkemy.alkemybankbase.data.local.SessionManager
 import com.Alkemy.alkemybankbase.databinding.ActivityHomeBinding
 import com.Alkemy.alkemybankbase.ui.fragments.*
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

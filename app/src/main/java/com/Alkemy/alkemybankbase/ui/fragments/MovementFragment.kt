@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -52,14 +53,29 @@ class MovementFragment : Fragment() {
         viewModel.isLoadingLiveData.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it
             binding.rvTransactions.isVisible = !it
+            if(it){
+                binding.tvErrorTransaction.isVisible = !it
+            }
         }
         viewModel.allTransactionLiveData.observe(viewLifecycleOwner) { transactionList ->
             binding.rvTransactions.adapter = TransactionAdapter(transactionList) {}
-
+        }
+        viewModel.errorLiveData.observe(viewLifecycleOwner) { resId ->
+            //show error message
+            binding.tvErrorTransaction.isVisible = true
         }
     }
 
     private fun initRecyclerView() {
         binding.rvTransactions.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun showAlert(title:String,message:String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(title)
+        builder.setMessage(message)
+        builder.setPositiveButton("Aceptar",null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 }

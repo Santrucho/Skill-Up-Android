@@ -43,6 +43,7 @@ class ExpenseFragment : Fragment() {
         setupListeners()
 
         auth = "${SessionManager.getToken(requireContext())}"
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
         return binding.root
     }
 
