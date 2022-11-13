@@ -36,7 +36,7 @@ class ExpensesViewModel @Inject constructor(
         val conceptPattern = "[a-zA-Z][a-zA-Z ]*"
         val patternFn = Pattern.compile(conceptPattern)
         val isConceptValid = patternFn.matcher(concept).matches()
-        if(!isConceptValid && concept.length in 1..19 ){
+        if(!isConceptValid || concept.length !in 1..19 ){
             conceptErrorResourceLiveData.value = R.string.concept_error
             isFormValidLiveData.value = false
         }else if(amount <= 0){
