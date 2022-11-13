@@ -26,6 +26,7 @@ class SendViewModel @Inject constructor(private val sendRepo : SendRepository) :
     val isFormValidLiveData = MutableLiveData<Boolean>()
 
     fun validateForm(toAccount_Id:Int,concept:String,amount:Int){
+        // check if concept is valid with pattern
         val conceptPattern = "[a-zA-Z][a-zA-Z ]*"
         val patternFn = Pattern.compile(conceptPattern)
         val isConceptValid = patternFn.matcher(concept).matches()
@@ -40,9 +41,6 @@ class SendViewModel @Inject constructor(private val sendRepo : SendRepository) :
         }
         else{
             isFormValidLiveData.value = true
-            conceptErrorResourceLiveData.value = null
-            amountErrorResourceLiveData.value = null
-            toAccountIdErrorResourceLiveData.value = null
         }
     }
     suspend fun send(

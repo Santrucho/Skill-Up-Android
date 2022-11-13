@@ -27,7 +27,6 @@ class ChargeViewModel @Inject constructor(private val chargeRepo : ChargeReposit
     val isLoadingLiveData = MutableLiveData<Boolean>()
 
     fun validateForm(amount:Int,concept:String){
-        // check if amount is valid with pattern
         val amountValid = amount>=1
         // check if concept is valid with pattern
         val conceptPattern = "[a-zA-Z][a-zA-Z ]*"

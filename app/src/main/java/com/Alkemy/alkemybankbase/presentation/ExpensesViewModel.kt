@@ -32,7 +32,6 @@ class ExpensesViewModel @Inject constructor(
     val isLoadingLiveData = MutableLiveData<Boolean>()
 
     fun validateForm(concept: String, amount: Int, toAccountId: Int) {
-
         val conceptPattern = "[a-zA-Z][a-zA-Z ]*"
         val patternFn = Pattern.compile(conceptPattern)
         val isConceptValid = patternFn.matcher(concept).matches()
@@ -47,9 +46,6 @@ class ExpensesViewModel @Inject constructor(
         }
         else{
             isFormValidLiveData.value = true
-            conceptErrorResourceLiveData.value = null
-            amountErrorResourceLiveData.value = null
-            toAccountIdErrorResourceLiveData.value = null
         }
     }
 
