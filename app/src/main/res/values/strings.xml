@@ -41,4 +41,6 @@
     <string name="destination">Destination Account</string>
     <string name="send">Send</string>
     <string name="date">Fecha de gasto</string>
+    <string name="made_with">Made with</string>
+    <string name="by_grupo_2">by Grupo 2</string>
 </resources>
