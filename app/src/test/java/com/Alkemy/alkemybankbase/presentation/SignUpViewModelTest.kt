@@ -2,6 +2,8 @@ package com.Alkemy.alkemybankbase.presentation
 
 import com.Alkemy.alkemybankbase.R
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.Alkemy.alkemybankbase.repository.FakeAccountRepository
+import com.Alkemy.alkemybankbase.repository.FakeLoginRepository
 import com.Alkemy.alkemybankbase.repository.FakeSignUpRepository
 import com.google.common.truth.Truth.assertThat
 import org.junit.Before
@@ -12,12 +14,11 @@ import org.junit.rules.TestRule
 class SignUpViewModelTest {
     @get:Rule var rule: TestRule = InstantTaskExecutorRule()
     //Needed Rule to test LiveData changes
-
     private lateinit var viewModel : SignUpViewModel
 
     @Before
     fun setup() {
-        viewModel = SignUpViewModel(FakeSignUpRepository())
+        viewModel = SignUpViewModel(FakeSignUpRepository(), FakeAccountRepository(), FakeLoginRepository())
     }
 
     //In the cases of empty fields, regardless of which one is empty, the ViewModel should set

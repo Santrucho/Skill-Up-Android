@@ -18,7 +18,6 @@
     <string name="confirm_password_error">Passwords are not the same</string>
     <string name="password_error">Password must have at least 8 characters, 1 uppercase and 1 number</string>
     <string name="fecha">Fecha</string>
-    <string name="concepto">Concepto</string>
     <string name="importe">Importe</string>
     <string name="you_don_t_have_any_transaction">You don\'t have any transaction</string>
     <string name="ultimos_movimientos">Ultimos movimientos</string>
@@ -32,8 +31,14 @@
     <string name="facebook_client_token">c506db6051cb53aaceada3730335c0ea</string>
     <string name="no_internet">No internet connection. Please connect to internet and retry.</string>
     <string name="retry">Retry</string>
-    <string name="amount">Monto</string>
     <string name="chargeBalance">Cargar saldo</string>
     <string name="amount_error">Ingrese un monto mayor que cero</string>
     <string name="concept_error">El limite de caracteres es de 20</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="amount">Amount</string>
+    <string name="concept">Concept</string>
+    <string name="toAccountId_error">Una cuenta solo puede contener numeros mayores que 0</string>
+    <string name="destination">Destination Account</string>
+    <string name="send">Send</string>
+    <string name="date">Fecha de gasto</string>
 </resources>

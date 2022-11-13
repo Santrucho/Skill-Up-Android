@@ -1,7 +1,6 @@
 package com.Alkemy.alkemybankbase.presentation
 
 import android.content.Context
-import android.util.Log
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -65,8 +64,8 @@ class LoginViewModel @Inject constructor(private val loginRepo : LoginRepository
         loginResponse = LoginResponse()
         when(loginResult){
             is Resource.Success -> {
-                loginResponse = loginResult.data
-                SessionManager.saveAuthToken(context, "Bearer ${loginResult.data.accessToken}")
+                loginResponse = loginResult.data!!
+                SessionManager.saveAuthToken(context, "Bearer ${loginResult.data!!.accessToken}")
                 isLoading.value = false
                 getAllAccounts(context)
             }
@@ -93,7 +92,7 @@ class LoginViewModel @Inject constructor(private val loginRepo : LoginRepository
 
                 }
                 is Resource.Success ->{
-                    val userId = response.data.first().userId
+                    val userId = response.data!!.first().userId
                     val accountId = response.data.first().id
                     isLoading.value = false
                     AccountManager.saveIds(context,userId.toString(),accountId.toString())

@@ -12,6 +12,7 @@ import com.Alkemy.alkemybankbase.utils.Constants.TYPE_TOPUP
 import com.Alkemy.alkemybankbase.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.lang.IllegalArgumentException
+import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,15 +27,15 @@ class ChargeViewModel @Inject constructor(private val chargeRepo : ChargeReposit
     val isLoadingLiveData = MutableLiveData<Boolean>()
 
     fun validateForm(amount:Int,concept:String){
-        // check if amount is valid with pattern
         val amountValid = amount>=1
         // check if concept is valid with pattern
-        val isConceptValid = (concept.length in 1..19)
-
+        val conceptPattern = "[a-zA-Z][a-zA-Z ]*"
+        val patternFn = Pattern.compile(conceptPattern)
+        val isConceptValid = patternFn.matcher(concept).matches()
         if (!amountValid){
             amountErrorResourceLiveData.value = R.string.amount_error
             isFormValidLiveData.value = false
-        }else if (!isConceptValid){
+        }else if(!isConceptValid || concept.length !in 1..19){
             conceptErrorResourceLiveData.value = R.string.concept_error
             isFormValidLiveData.value = false
         }else{
@@ -54,7 +55,7 @@ class ChargeViewModel @Inject constructor(private val chargeRepo : ChargeReposit
         when(topUpResult){
             is Resource.Success -> {
                 isLoadingLiveData.value = false
-                topUpResponse = topUpResult.data
+                topUpResponse = topUpResult.data!!
             }
             is Resource.Failure -> {
                 errorLiveData.value = topUpResult.toString()

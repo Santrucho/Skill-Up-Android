@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.Alkemy.alkemybankbase.R
 import com.Alkemy.alkemybankbase.data.model.login.LoginInput
 import com.Alkemy.alkemybankbase.data.model.account.NewAccount
-import com.Alkemy.alkemybankbase.repository.singup.SignUpRepository
+import com.Alkemy.alkemybankbase.repository.signup.SignUpRepository
 import com.Alkemy.alkemybankbase.data.model.user.User
 import com.Alkemy.alkemybankbase.data.model.user.UserResponse
 import com.Alkemy.alkemybankbase.repository.account.AccountRepository
@@ -98,7 +98,7 @@ class SignUpViewModel @Inject constructor(
         userResponse = UserResponse()
         when (userResult) {
             is Resource.Success -> {
-                userResponse = userResult.data
+                userResponse = userResult.data!!
                 //SessionManager.saveAuthToken(context, userResult.data.accessToken)
             }
             is Resource.Failure -> {
@@ -145,7 +145,7 @@ class SignUpViewModel @Inject constructor(
                 }
                 is Resource.Loading -> {}
                 is Resource.Success -> {
-                    token.value = response.data.accessToken
+                    token.value = response.data!!.accessToken
                 }
             }
         }

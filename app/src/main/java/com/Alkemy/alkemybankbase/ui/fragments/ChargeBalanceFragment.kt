@@ -73,20 +73,16 @@ class ChargeBalanceFragment : Fragment() {
                 }
             }
             etAmount.afterTextChanged {
-                if (!etAmount.text.isNullOrBlank()) {
-                    viewModel.validateForm(
-                        etAmount.text.toString().toInt(),
-                        etConcept.text.toString(),
-                    )
-                }
+                viewModel.validateForm(
+                    etAmount.text.toString().toIntOrNull() ?: 0,
+                    etConcept.text.toString(),
+                )
             }
             etConcept.afterTextChanged {
-                if (!etConcept.text.isNullOrBlank()) {
-                    viewModel.validateForm(
-                        etAmount.text.toString().toInt(),
-                        etConcept.text.toString(),
-                    )
-                }
+                viewModel.validateForm(
+                    etAmount.text.toString().toIntOrNull() ?: 0,
+                    etConcept.text.toString(),
+                )
             }
             btnChargeBalance.isEnabled = false
         }

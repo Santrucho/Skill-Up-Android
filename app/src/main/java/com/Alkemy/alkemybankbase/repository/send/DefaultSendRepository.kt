@@ -1,7 +1,9 @@
 package com.Alkemy.alkemybankbase.repository.send
 
+import com.Alkemy.alkemybankbase.data.model.send.Send
+import com.Alkemy.alkemybankbase.data.model.send.SendResponse
 import com.Alkemy.alkemybankbase.data.remote.ApiService
-import dagger.hilt.android.AndroidEntryPoint
+import com.Alkemy.alkemybankbase.utils.Resource
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
@@ -10,4 +12,12 @@ class DefaultSendRepository @Inject constructor(private val apiService: ApiServi
     /***********************************************************
     IMPLEMENTATIONS GO HERE, MAKE SURE TO USE OVERRIDE
      ************************************************************/
+    override suspend fun sendUser(auth: String, send: Send, id:Int): Resource<SendResponse> {
+        val resp = try {
+            apiService.sendBalance(auth, send, id)
+        } catch (e: Exception) {
+            return Resource.Failure(e)
+        }
+        return Resource.Success(resp)
+    }
 }
