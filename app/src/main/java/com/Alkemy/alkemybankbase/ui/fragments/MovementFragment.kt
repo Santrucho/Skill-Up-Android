@@ -12,6 +12,8 @@ import com.Alkemy.alkemybankbase.data.local.SessionManager
 import com.Alkemy.alkemybankbase.databinding.FragmentMovementBinding
 import com.Alkemy.alkemybankbase.presentation.MovementViewModel
 import com.Alkemy.alkemybankbase.ui.adapters.TransactionAdapter
+import com.Alkemy.alkemybankbase.utils.LogBundle
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -21,6 +23,7 @@ class MovementFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: MovementViewModel by viewModels()
     private lateinit var auth: String
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +38,11 @@ class MovementFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = "${SessionManager.getToken(requireContext())}"
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+        LogBundle.logBundleAnalytics(
+            firebaseAnalytics,
+            "Ingreso a la vista de movimientos",
+            "ingreso_a_ultimos_movimientos")
         viewModel.getAllAccounts(auth)
         initRecyclerView()
         setupObservers()
