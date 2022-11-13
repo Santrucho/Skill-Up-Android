@@ -63,6 +63,7 @@ class MovementFragment : Fragment() {
         viewModel.errorLiveData.observe(viewLifecycleOwner) { resId ->
             //show error message
             binding.tvErrorTransaction.isVisible = true
+            binding.rvTransactions.isVisible = false
         }
     }
 

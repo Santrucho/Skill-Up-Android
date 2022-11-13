@@ -43,6 +43,6 @@
     <string name="date">Fecha de gasto</string>
     <string name="made_with">Made with</string>
     <string name="by_grupo_2">by Grupo 2</string>
-    <string name="you_cant_access_to_transactions">You cannot access to transactions</string>
+    <string name="you_cant_access_to_transactions">You cannot access to transactions. Please check your internet connection</string>
     <string name="low_amount_error">No hay fondos suficientes. Realice un gasto en lugar de transferencia o ingrese un menor monto</string>
 </resources>
