@@ -35,13 +35,18 @@ class SendFragment : Fragment() {
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentSendBinding.inflate(inflater,container,false)
-        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
         auth = SessionManager.getToken(requireContext()).toString()
-        setupObservers()
-        setupListener()
         return binding.root
     }
-    private fun setupListener() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupObservers()
+        setupListeners()
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+    }
+
+    private fun setupListeners() {
         with(binding) {
             btnSend.setOnClickListener {
                 LogBundle.logBundleAnalytics(firebaseAnalytics,"Send Pressed","enviar_pressed")
