@@ -20,6 +20,7 @@ import com.Alkemy.alkemybankbase.utils.afterTextChanged
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 @AndroidEntryPoint
 class ExpenseFragment : Fragment() {
@@ -108,6 +109,8 @@ class ExpenseFragment : Fragment() {
                 }
             }
             btnAddExpense.isEnabled = false
+            etDate.isEnabled = false
+            etDate.setText(LocalDateTime.now().toString())
         }
     }
 
