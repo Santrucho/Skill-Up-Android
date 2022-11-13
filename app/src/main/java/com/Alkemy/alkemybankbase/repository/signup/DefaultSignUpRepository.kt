@@ -17,7 +17,7 @@ class DefaultSignUpRepository @Inject constructor(private val apiService:ApiServ
         val resp = try {
             apiService.addUser(user)
         } catch (e: Exception) {
-            return Resource.Failure(e)
+            return Resource.Failure(e.message.toString())
         }
         return Resource.Success(resp)
     }

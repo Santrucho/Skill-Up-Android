@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.Alkemy.alkemybankbase.R
+import com.Alkemy.alkemybankbase.data.local.AccountManager
 import com.Alkemy.alkemybankbase.data.model.Account
 import com.Alkemy.alkemybankbase.data.model.AccountsResponse
 import com.Alkemy.alkemybankbase.data.model.Transaction
@@ -26,7 +27,7 @@ class MovementViewModel @Inject constructor(
 ) : ViewModel() {
     val allTransactionLiveData = MutableLiveData<List<Transaction>>()
     val balance = MutableLiveData<String>()
-    val errorLiveData = MutableLiveData<Int>()
+    val errorLiveData = MutableLiveData<String>()
     val isLoadingLiveData = MutableLiveData<Boolean>()
 
     fun getAllTransactions(auth: String, account: Account? = null) {
@@ -39,7 +40,7 @@ class MovementViewModel @Inject constructor(
             when (response) {
                 is Resource.Failure -> {
                     isLoadingLiveData.value = false
-                    errorLiveData.value = R.string.no_internet
+                    errorLiveData.value = response.message.toString()
 
                 }
                 is Resource.Loading -> {
@@ -61,6 +62,7 @@ class MovementViewModel @Inject constructor(
                         val newBalance = topUp - payments
 
                         balance.value = newBalance.toString()
+                        AccountManager.balance = balance.value.toString().toInt()
                     }
                     allTransactionLiveData.value = transactionList
 
@@ -78,7 +80,7 @@ class MovementViewModel @Inject constructor(
             when(response){
                 is Resource.Failure -> {
                     isLoadingLiveData.value = false
-                    errorLiveData.value = R.string.no_internet
+                    errorLiveData.value = response.message.toString()
                 }
                 is Resource.Loading -> {
 

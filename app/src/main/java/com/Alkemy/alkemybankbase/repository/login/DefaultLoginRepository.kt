@@ -16,7 +16,7 @@ class DefaultLoginRepository @Inject constructor(private val apiService: ApiServ
         val resp = try{
             apiService.loginUser(loginInput)
         }catch(e:Exception){
-            return Resource.Failure(e)
+            return Resource.Failure(e.message.toString())
         }
         return Resource.Success(resp)
     }

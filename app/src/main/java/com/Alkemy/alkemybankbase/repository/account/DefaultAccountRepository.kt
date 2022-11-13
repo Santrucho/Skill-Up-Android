@@ -14,7 +14,7 @@ class DefaultAccountRepository @Inject constructor(private val apiService: ApiSe
         val resp = try {
             apiService.getAllAccounts(auth)
         }catch (e:Exception){
-            return  Resource.Failure(e)
+            return  Resource.Failure(e.message.toString())
         }
         return Resource.Success(resp)
     }
@@ -23,7 +23,7 @@ class DefaultAccountRepository @Inject constructor(private val apiService: ApiSe
         val resp = try{
             apiService.createNewAccount(auth, newAccount)
         }catch(e:Exception){
-            return Resource.Failure(e)
+            return Resource.Failure(e.message.toString())
         }
         return Resource.Success(resp)
     }

@@ -70,12 +70,12 @@ class HomeFragment : Fragment() {
                 }
             binding.tvEmptyTransaction.isVisible = transactionList.isEmpty()
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) { resId ->
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             //show error message
             binding.clHome.isVisible = false
             binding.tvError.isVisible = true
             binding.btnRetry.isVisible = true
-            binding.tvError.text = getString(resId)
+            binding.tvError.text = it.toString()
 
         }
         viewModel.balance.observe(viewLifecycleOwner) { balance ->

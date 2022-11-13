@@ -16,7 +16,7 @@ class DefaultMovementRepository @Inject constructor(private val apiService: ApiS
         val resp = try {
             apiService.getAllTransactions(auth)
         }catch (e:Exception){
-            return  Resource.Failure(e)
+            return  Resource.Failure(e.message.toString())
         }
         return Resource.Success(resp)
     }

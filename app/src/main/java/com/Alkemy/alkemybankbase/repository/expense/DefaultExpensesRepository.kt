@@ -16,7 +16,7 @@ class DefaultExpensesRepository @Inject constructor(private val apiService: ApiS
         val resp = try {
             apiService.addExpense(auth,expense)
         }catch (e:Exception){
-            return  Resource.Failure(e)
+            return  Resource.Failure(e.message.toString())
         }
         return Resource.Success(resp)
     }

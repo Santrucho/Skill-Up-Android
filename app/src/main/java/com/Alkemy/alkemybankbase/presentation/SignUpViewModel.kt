@@ -102,7 +102,7 @@ class SignUpViewModel @Inject constructor(
                 //SessionManager.saveAuthToken(context, userResult.data.accessToken)
             }
             is Resource.Failure -> {
-                userError = userResult.toString()
+                userError = userResult.message.toString()
                 isLoading.value = false
             }
             else -> throw IllegalArgumentException("Illegal Result")
@@ -120,7 +120,7 @@ class SignUpViewModel @Inject constructor(
                 is Resource.Failure -> {
                     isLoading.value = false
                     isAccountCreated.value = false
-                    userError = "Please try again"
+                    userError = response.message.toString()
                 }
                 is Resource.Loading -> {}
                 is Resource.Success -> {
@@ -141,7 +141,7 @@ class SignUpViewModel @Inject constructor(
                 is Resource.Failure -> {
                     isLoading.value = false
                     isAccountCreated.value = false
-                    userError = "Please try again"
+                    userError = response.message.toString()
                 }
                 is Resource.Loading -> {}
                 is Resource.Success -> {
