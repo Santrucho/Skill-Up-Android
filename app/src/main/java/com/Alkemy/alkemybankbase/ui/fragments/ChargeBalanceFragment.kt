@@ -3,7 +3,6 @@ package com.Alkemy.alkemybankbase.ui.fragments
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.Alkemy.alkemybankbase.data.local.AccountManager
 import com.Alkemy.alkemybankbase.data.local.SessionManager
 import com.Alkemy.alkemybankbase.databinding.FragmentChargeBalanceBinding
 import com.Alkemy.alkemybankbase.presentation.ChargeViewModel
@@ -67,8 +65,6 @@ class ChargeBalanceFragment : Fragment() {
                 lifecycleScope.launch {
                     viewModel.topUp(requireContext(), auth, etAmount.text.toString().toInt(), etConcept.text.toString())
 
-                    Log.d("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",viewModel.topUpResponse.toString())
-
                     if (viewModel.topUpResponse.status==200) {
                         showDialog("Aceptar", "Carga de saldo exitosa")
                     } else if (!viewModel.errorLiveData.value.isNullOrBlank()) {
@@ -85,10 +81,12 @@ class ChargeBalanceFragment : Fragment() {
                 }
             }
             etConcept.afterTextChanged {
-                viewModel.validateForm(
-                    etAmount.text.toString().toInt(),
-                    etConcept.text.toString(),
-                )
+                if (!etConcept.text.isNullOrBlank()) {
+                    viewModel.validateForm(
+                        etAmount.text.toString().toInt(),
+                        etConcept.text.toString(),
+                    )
+                }
             }
             btnChargeBalance.isEnabled = false
         }

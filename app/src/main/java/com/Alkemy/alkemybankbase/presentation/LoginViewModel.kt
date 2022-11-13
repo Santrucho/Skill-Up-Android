@@ -84,8 +84,6 @@ class LoginViewModel @Inject constructor(private val loginRepo : LoginRepository
             val response = withContext(Dispatchers.IO){
                 accountRepo.getAllAccounts("Bearer ${loginResponse.accessToken}")
             }
-            Log.d("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!","Bearer ${loginResponse.accessToken}")
-            Log.d("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",response.toString())
             when(response){
                 is Resource.Failure -> {
                     isLoading.value = false
@@ -96,9 +94,7 @@ class LoginViewModel @Inject constructor(private val loginRepo : LoginRepository
                 }
                 is Resource.Success ->{
                     val userId = response.data.first().userId
-                    Log.d("#########################################",userId.toString())
                     val accountId = response.data.first().id
-                    Log.d("2222222222222222222222222222222222222222222222222",accountId.toString())
                     isLoading.value = false
                     AccountManager.saveIds(context,userId.toString(),accountId.toString())
                 }

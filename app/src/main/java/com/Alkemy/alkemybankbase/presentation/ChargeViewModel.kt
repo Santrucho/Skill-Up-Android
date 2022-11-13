@@ -62,30 +62,5 @@ class ChargeViewModel @Inject constructor(private val chargeRepo : ChargeReposit
             }
             else -> throw IllegalArgumentException("Illegal Result")
         }
-        /*
-        isLoadingLiveData.value = true
-        topUpResponse = TopupResponse()
-
-
-        viewModelScope.launch(Dispatchers.Main) {
-            val response = withContext(Dispatchers.IO) {
-                val topUp = TopupInput(TYPE_TOPUP,concept,amount)
-                AccountManager.getAccountId(context)
-                    ?.let { chargeRepo.topUp(auth, topUp, it.toInt()) }
-            }
-            when (response) {
-                is Resource.Failure -> {
-                    isLoadingLiveData.value = false
-                    errorLiveData.value = response.toString()
-                }
-                is Resource.Loading -> {
-
-                }
-                is Resource.Success -> {
-                    isLoadingLiveData.value = false
-                    topUpResponse = response.data
-                }
-            }
-        } */
     }
 }

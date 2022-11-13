@@ -40,7 +40,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
          auth = "${SessionManager.getToken(requireContext())}"
-        Log.d("5555555555555555555555555555555555555555555",auth.toString())
         viewModel.getAllAccounts(auth)
         initRecyclerView()
         setupObservers()

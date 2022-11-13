@@ -40,7 +40,6 @@ class MovementViewModel @Inject constructor(
                 is Resource.Failure -> {
                     isLoadingLiveData.value = false
                     errorLiveData.value = R.string.no_internet
-                    Log.d("88888888888888888888888888888888888888888","error")
 
                 }
                 is Resource.Loading -> {
@@ -55,17 +54,14 @@ class MovementViewModel @Inject constructor(
                     transactionList.filter { it.type == TYPE_PAYMENT }.forEach { trans ->
                         payments += trans.amount.toIntOrNull() ?: 0
                     }
-                    Log.d("oooooooooooooooooooooooooooooooooooooooooooooooooo",payments.toString())
                     transactionList.filter { it.type == TYPE_TOPUP }.forEach { trans ->
                         topUp += trans.amount.toIntOrNull() ?: 0
                     }
-                    Log.d("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",topUp.toString())
                     account?.let {
                         val newBalance = topUp - payments
-                        Log.d("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",newBalance.toString())
+
                         balance.value = newBalance.toString()
                     }
-                    Log.d("MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",balance.value.toString())
                     allTransactionLiveData.value = transactionList
 
                 }
@@ -83,7 +79,6 @@ class MovementViewModel @Inject constructor(
                 is Resource.Failure -> {
                     isLoadingLiveData.value = false
                     errorLiveData.value = R.string.no_internet
-                    Log.d("9999999999999999999999999999999999999999999999","error")
                 }
                 is Resource.Loading -> {
 
