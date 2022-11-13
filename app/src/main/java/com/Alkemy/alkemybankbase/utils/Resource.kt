@@ -3,7 +3,7 @@ package com.Alkemy.alkemybankbase.utils
 sealed class Resource<T>(val data: T? = null, val message: String? = null) {
     class Loading<T>(data: T? = null) : Resource<T>(data)
     class Success<T>(data: T) : Resource<T>(data)
-    class Failure<T>(message: String, data: T? = null) : Resource<T>(data, message)
+    class Failure<T>(message: Exception, data: T? = null) : Resource<T>(data, message)
 }
 /*
 Made a few changes to the class:

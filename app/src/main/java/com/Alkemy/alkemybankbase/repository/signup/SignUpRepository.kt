@@ -1,4 +1,4 @@
-package com.Alkemy.alkemybankbase.repository.singup
+package com.Alkemy.alkemybankbase.repository.signup
 
 import com.Alkemy.alkemybankbase.data.model.user.User
 import com.Alkemy.alkemybankbase.data.model.user.UserResponse

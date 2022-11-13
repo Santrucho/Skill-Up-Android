@@ -1,10 +1,14 @@
 package com.Alkemy.alkemybankbase.repository.send
 
+import com.Alkemy.alkemybankbase.data.model.send.Send
+import com.Alkemy.alkemybankbase.data.model.send.SendResponse
+import com.Alkemy.alkemybankbase.utils.Resource
+
 interface SendRepository {
     /***********************************************************
     JUST WRITE EMPTY FUNCTIONS WITH NO REAL IMPLEMENTATIONS
      ************************************************************/
-
+    suspend fun sendUser(auth:String,send: Send, id:Int) : Resource<SendResponse>
     /*Unit Tests should not have external dependencies.
     In our case we have use injections like this ViewModel <- Repository <- ApiService <- RetrofitInstance
     Which means that to write a test for a form validation function from the viewmodel,

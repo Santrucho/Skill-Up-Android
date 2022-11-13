@@ -47,7 +47,7 @@ class MovementViewModel @Inject constructor(
                 }
                 is Resource.Success -> {
                     isLoadingLiveData.value = false
-                    val transactionList = response.data.transactions
+                    val transactionList = response.data!!.transactions
                     //calculate the balance
                     var payments = 0
                     var topUp = 0
@@ -85,7 +85,7 @@ class MovementViewModel @Inject constructor(
                 }
                 is Resource.Success ->{
                     isLoadingLiveData.value = false
-                    getAllTransactions(auth, response.data.firstOrNull())
+                    getAllTransactions(auth, response.data!!.firstOrNull())
                 }
             }
         }

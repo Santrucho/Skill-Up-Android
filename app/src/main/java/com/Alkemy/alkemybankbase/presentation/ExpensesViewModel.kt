@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.Alkemy.alkemybankbase.R
 import com.Alkemy.alkemybankbase.data.local.AccountManager
-import com.Alkemy.alkemybankbase.data.model.expense.ExpenseError
 import com.Alkemy.alkemybankbase.data.model.expense.ExpenseInput
 import com.Alkemy.alkemybankbase.data.model.expense.ExpenseResponse
 import com.Alkemy.alkemybankbase.repository.expense.ExpensesRepository
@@ -16,7 +15,6 @@ import java.lang.IllegalArgumentException
 import java.time.LocalDateTime
 import java.util.regex.Pattern
 import javax.inject.Inject
-import kotlin.math.exp
 
 @HiltViewModel
 class ExpensesViewModel @Inject constructor(
@@ -38,7 +36,7 @@ class ExpensesViewModel @Inject constructor(
         val conceptPattern = "[a-zA-Z][a-zA-Z ]*"
         val patternFn = Pattern.compile(conceptPattern)
         val isConceptValid = patternFn.matcher(concept).matches()
-        if(!isConceptValid ){
+        if(!isConceptValid && concept.length in 1..19 ){
             conceptErrorResourceLiveData.value = R.string.concept_error
             isFormValidLiveData.value = false
         }else if(amount <= 0){

@@ -1,7 +1,6 @@
 package com.Alkemy.alkemybankbase.utils
 
 import com.Alkemy.alkemybankbase.data.remote.ApiService
-import com.Alkemy.alkemybankbase.repository.*
 import com.Alkemy.alkemybankbase.repository.account.AccountRepository
 import com.Alkemy.alkemybankbase.repository.account.DefaultAccountRepository
 import com.Alkemy.alkemybankbase.repository.charge.ChargeRepository
@@ -14,8 +13,8 @@ import com.Alkemy.alkemybankbase.repository.movement.DefaultMovementRepository
 import com.Alkemy.alkemybankbase.repository.movement.MovementRepository
 import com.Alkemy.alkemybankbase.repository.send.SendRepository
 import com.Alkemy.alkemybankbase.repository.send.DefaultSendRepository
-import com.Alkemy.alkemybankbase.repository.singup.SignUpRepository
-import com.Alkemy.alkemybankbase.repository.singup.DefaultSignUpRepository
+import com.Alkemy.alkemybankbase.repository.signup.SignUpRepository
+import com.Alkemy.alkemybankbase.repository.signup.DefaultSignUpRepository
 import com.Alkemy.alkemybankbase.utils.Constants.BASE_URL
 import com.google.gson.GsonBuilder
 import dagger.Module

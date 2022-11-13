@@ -39,4 +39,5 @@
     <string name="concept">Concept</string>
     <string name="toAccountId_error">Una cuenta solo puede contener numeros mayores que 0</string>
     <string name="destination">Destination Account</string>
+    <string name="send">Send</string>
 </resources>
