@@ -53,6 +53,28 @@ class SendFragment : Fragment() {
                     }
                 }
             }
+            etAmount.afterTextChanged {
+                viewModel.validateForm(
+                    etDestination.text.toString().toInt(),
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toInt()
+                )
+            }
+            etConcept.afterTextChanged {
+                viewModel.validateForm(
+                    etDestination.text.toString().toInt(),
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toInt()
+                )
+            }
+            etDestination.afterTextChanged {
+                viewModel.validateForm(
+                    etDestination.text.toString().toInt(),
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toInt()
+                )
+            }
+            btnSend.isEnabled = false
         }
     }
 
