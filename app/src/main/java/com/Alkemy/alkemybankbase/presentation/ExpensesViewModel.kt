@@ -3,17 +3,20 @@ package com.Alkemy.alkemybankbase.presentation
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.Alkemy.alkemybankbase.R
 import com.Alkemy.alkemybankbase.data.local.AccountManager
-import com.Alkemy.alkemybankbase.data.model.expense.Expense
-import com.Alkemy.alkemybankbase.data.model.Transaction
+import com.Alkemy.alkemybankbase.data.model.expense.ExpenseError
+import com.Alkemy.alkemybankbase.data.model.expense.ExpenseInput
+import com.Alkemy.alkemybankbase.data.model.expense.ExpenseResponse
 import com.Alkemy.alkemybankbase.repository.expense.ExpensesRepository
+import com.Alkemy.alkemybankbase.utils.Constants.TYPE_PAYMENT
 import com.Alkemy.alkemybankbase.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import java.lang.IllegalArgumentException
+import java.time.LocalDateTime
+import java.util.regex.Pattern
 import javax.inject.Inject
+import kotlin.math.exp
 
 @HiltViewModel
 class ExpensesViewModel @Inject constructor(
@@ -21,47 +24,59 @@ class ExpensesViewModel @Inject constructor(
     ) : ViewModel() {
 
     val amountErrorResourceLiveData = MutableLiveData<Int>()
-    val conceptErrorResourceLiveData = MutableLiveData<String>()
-    val dateErrorResourceIdLiveData = MutableLiveData<String>()
-    val toAccountIdErrorResourceIdLiveData = MutableLiveData<Int>()
+    val conceptErrorResourceLiveData = MutableLiveData<Int>()
+    val toAccountIdErrorResourceLiveData = MutableLiveData<Int>()
     val isFormValidLiveData = MutableLiveData<Boolean>()
 
-    lateinit var expenseResponse: Transaction
+    lateinit var expenseResponse: ExpenseResponse
     val errorLiveData = MutableLiveData<String>() //Error adding expense
+    val statusLiveData = MutableLiveData<Int>()
     val isLoadingLiveData = MutableLiveData<Boolean>()
 
-    fun validateForm(concept:String,amount:Int,date:String,currency:String){
-        //TODO: Quien haga esta implementacion recuerde que currency no la vamos a usar, y que faltan parametros ahi
+    fun validateForm(concept: String, amount: Int, toAccountId: Int) {
+
+        val conceptPattern = "[a-zA-Z][a-zA-Z ]*"
+        val patternFn = Pattern.compile(conceptPattern)
+        val isConceptValid = patternFn.matcher(concept).matches()
+        if(!isConceptValid ){
+            conceptErrorResourceLiveData.value = R.string.concept_error
+            isFormValidLiveData.value = false
+        }else if(amount <= 0){
+            amountErrorResourceLiveData.value = R.string.amount_error
+            isFormValidLiveData.value = false
+        }else if(toAccountId <= 0){
+            toAccountIdErrorResourceLiveData.value = R.string.toAccountId_error
+        }
+        else{
+            isFormValidLiveData.value = true
+            conceptErrorResourceLiveData.value = null
+            amountErrorResourceLiveData.value = null
+            toAccountIdErrorResourceLiveData.value = null
+        }
     }
 
-    fun addExpense(context: Context, auth: String, amount: Int, concept: String, date: String, to_account_id: Int) {
+    suspend fun addExpense(context: Context, auth: String, amount: Int, concept: String, to_account_id: Int) {
         isLoadingLiveData.value = true
-        viewModelScope.launch(Dispatchers.Main) {
-            val response = withContext(Dispatchers.IO) {
-                val expense = Expense(
-                    amount,
-                    concept,
-                    date,
-                    "payment",
-                    AccountManager.getAccountId(context)!!.toInt(),
-                    AccountManager.getUserId(context)!!.toInt(),
-                    to_account_id
-                )
-                expensesRepo.addExpense(auth, expense)
+        val expenseInput = ExpenseInput(
+            amount,
+            concept,
+            LocalDateTime.now().toString(),
+            TYPE_PAYMENT,
+            AccountManager.getAccountId(context)!!.toInt(),
+            AccountManager.getUserId(context)!!.toInt(),
+            to_account_id
+        )
+        expenseResponse = ExpenseResponse()
+        when(val expenseResult = expensesRepo.addExpense(auth, expenseInput)){
+            is Resource.Success -> {
+                isLoadingLiveData.value = false
+                expenseResponse = expenseResult.data!!
             }
-            when (response) {
-                is Resource.Failure -> {
-                    isLoadingLiveData.value = false
-                    errorLiveData.value = response.toString()
-                }
-                is Resource.Loading -> {
-
-                }
-                is Resource.Success -> {
-                    isLoadingLiveData.value = false
-                    expenseResponse = response.data
-                }
+            is Resource.Failure -> {
+                errorLiveData.value = expenseResult.message
+                isLoadingLiveData.value = false
             }
+            else -> throw IllegalArgumentException("Illegal Result")
         }
     }
 }

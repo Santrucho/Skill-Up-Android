@@ -1,7 +1,8 @@
 package com.Alkemy.alkemybankbase.repository.expense
 
-import com.Alkemy.alkemybankbase.data.model.expense.Expense
+import com.Alkemy.alkemybankbase.data.model.expense.ExpenseInput
 import com.Alkemy.alkemybankbase.data.model.Transaction
+import com.Alkemy.alkemybankbase.data.model.expense.ExpenseResponse
 import com.Alkemy.alkemybankbase.utils.Resource
 
 interface ExpensesRepository {
@@ -9,7 +10,7 @@ interface ExpensesRepository {
     JUST WRITE EMPTY FUNCTIONS WITH NO REAL IMPLEMENTATIONS
      ************************************************************/
 
-    suspend fun addExpense(auth: String, expense: Expense) : Resource<Transaction>
+    suspend fun addExpense(auth: String, expense: ExpenseInput) : Resource<ExpenseResponse>
 
     /*Unit Tests should not have external dependencies.
     In our case we have use injections like this ViewModel <- Repository <- ApiService <- RetrofitInstance
