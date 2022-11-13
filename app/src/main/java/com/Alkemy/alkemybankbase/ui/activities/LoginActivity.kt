@@ -64,10 +64,10 @@ class LoginActivity : AppCompatActivity() {
         setupListeners()
 
         //If the user closed the app while logged in, when opened again he should be taken to home
-        val token = SessionManager.getToken(this)
-        if (!token.isNullOrBlank()) {
-            navigateToHome()
-        }
+//        val token = SessionManager.getToken(this)
+//        if (!token.isNullOrBlank()) {
+//            navigateToHome()
+//        }
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         //auth = FirebaseAuth.getInstance()
     }
