@@ -71,7 +71,7 @@ class ExpensesViewModel @Inject constructor(
                 expenseResponse = expenseResult.data!!
             }
             is Resource.Failure -> {
-                errorLiveData.value = expenseResult.message
+                errorLiveData.value = expenseResult.message.toString()
                 isLoadingLiveData.value = false
             }
             else -> throw IllegalArgumentException("Illegal Result")

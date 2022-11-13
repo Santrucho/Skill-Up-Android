@@ -2,6 +2,7 @@ package com.Alkemy.alkemybankbase.presentation
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.Alkemy.alkemybankbase.R
+import com.Alkemy.alkemybankbase.repository.FakeAccountRepository
 import com.Alkemy.alkemybankbase.repository.FakeLoginRepository
 import com.google.common.truth.Truth
 import org.junit.Assert.*
@@ -19,7 +20,7 @@ class LoginViewModelTest{
 
     @Before
     fun setup() {
-        viewModel = LoginViewModel(FakeLoginRepository())
+        viewModel = LoginViewModel(FakeLoginRepository(), FakeAccountRepository())
     }
 
     //In the cases of empty fields, regardless of which one is empty, the ViewModel should set
