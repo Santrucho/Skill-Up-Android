@@ -58,33 +58,26 @@ class SendFragment : Fragment() {
                     }
                 }
             }
-
             etAmount.afterTextChanged {
-                if (!etAmount.text.isNullOrBlank()) {
-                    viewModel.validateForm(
-                        etDestination.text.toString().toIntOrNull() ?: 0,
-                        etConcept.text.toString(),
-                        etAmount.text.toString().toIntOrNull() ?: 0
-                    )
-                }
+                viewModel.validateForm(
+                    etDestination.text.toString().toIntOrNull() ?: 0,
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toIntOrNull() ?: 0
+                )
             }
             etConcept.afterTextChanged {
-                if (!etConcept.text.isNullOrBlank()) {
-                    viewModel.validateForm(
-                        etDestination.text.toString().toInt(),
-                        etConcept.text.toString(),
-                        etAmount.text.toString().toInt()
-                    )
-                }
+                viewModel.validateForm(
+                    etDestination.text.toString().toIntOrNull() ?: 0,
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toIntOrNull() ?: 0
+                )
             }
             etDestination.afterTextChanged {
-                if (!etDestination.text.isNullOrBlank()) {
-                    viewModel.validateForm(
-                        etDestination.text.toString().toInt(),
-                        etConcept.text.toString(),
-                        etAmount.text.toString().toInt()
-                    )
-                }
+                viewModel.validateForm(
+                    etDestination.text.toString().toIntOrNull() ?: 0,
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toIntOrNull() ?: 0
+                )
             }
             btnSend.isEnabled = false
         }

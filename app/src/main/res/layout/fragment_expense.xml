@@ -76,6 +76,7 @@
             android:id="@+id/etDestination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/destination"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,8 +94,8 @@
             android:id="@+id/etDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/destination"
-            android:inputType="number" />
+            android:hint="@string/date"
+            android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar

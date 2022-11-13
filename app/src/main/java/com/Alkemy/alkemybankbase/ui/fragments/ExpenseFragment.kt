@@ -20,7 +20,8 @@ import com.Alkemy.alkemybankbase.utils.afterTextChanged
 import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
+import java.text.SimpleDateFormat
+import java.util.*
 
 @AndroidEntryPoint
 class ExpenseFragment : Fragment() {
@@ -82,35 +83,31 @@ class ExpenseFragment : Fragment() {
                 }
             }
             etAmount.afterTextChanged {
-                if (!etAmount.text.isNullOrBlank()) {
-                    viewModel.validateForm(
-                        etConcept.text.toString(),
-                        etAmount.text.toString().toInt(),
-                        etDestination.text.toString().toInt(),
-                    )
-                }
+                viewModel.validateForm(
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toIntOrNull() ?: 0,
+                    etDestination.text.toString().toIntOrNull() ?: 0,
+                )
             }
             etConcept.afterTextChanged {
-                if (!etConcept.text.isNullOrBlank()) {
-                    viewModel.validateForm(
-                        etConcept.text.toString(),
-                        etAmount.text.toString().toInt(),
-                        etDestination.text.toString().toInt(),
-                    )
-                }
+                viewModel.validateForm(
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toIntOrNull() ?: 0,
+                    etDestination.text.toString().toIntOrNull() ?: 0,
+                )
             }
             etDestination.afterTextChanged {
-                if (!etDestination.text.isNullOrBlank()) {
-                    viewModel.validateForm(
-                        etConcept.text.toString(),
-                        etAmount.text.toString().toInt(),
-                        etDestination.text.toString().toInt(),
-                    )
-                }
+                viewModel.validateForm(
+                    etConcept.text.toString(),
+                    etAmount.text.toString().toIntOrNull() ?: 0,
+                    etDestination.text.toString().toIntOrNull() ?: 0,
+                )
             }
+            val time = Calendar.getInstance().time
+            val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+            etDate.setText(formatter.format(time))
             btnAddExpense.isEnabled = false
             etDate.isEnabled = false
-            etDate.setText(LocalDateTime.now().toString())
         }
     }
 
