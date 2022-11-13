@@ -16,7 +16,7 @@ class DefaultSendRepository @Inject constructor(private val apiService: ApiServi
         val resp = try {
             apiService.sendBalance(auth, send, id)
         } catch (e: Exception) {
-            return Resource.Failure(e)
+            return Resource.Failure(e.message.toString())
         }
         return Resource.Success(resp)
     }

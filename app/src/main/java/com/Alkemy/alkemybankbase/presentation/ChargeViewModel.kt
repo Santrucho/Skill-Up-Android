@@ -58,7 +58,7 @@ class ChargeViewModel @Inject constructor(private val chargeRepo : ChargeReposit
                 topUpResponse = topUpResult.data!!
             }
             is Resource.Failure -> {
-                errorLiveData.value = topUpResult.toString()
+                errorLiveData.value = topUpResult.message.toString()
                 isLoadingLiveData.value = false
             }
             else -> throw IllegalArgumentException("Illegal Result")

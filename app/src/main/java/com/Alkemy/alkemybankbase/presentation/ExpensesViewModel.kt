@@ -63,6 +63,7 @@ class ExpensesViewModel @Inject constructor(
         expenseResponse = ExpenseResponse()
         when(val expenseResult = expensesRepo.addExpense(auth, expenseInput)){
             is Resource.Success -> {
+                errorLiveData.value = ""
                 isLoadingLiveData.value = false
                 expenseResponse = expenseResult.data!!
             }

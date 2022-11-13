@@ -8,7 +8,10 @@ import com.Alkemy.alkemybankbase.data.local.AccountManager
 import com.Alkemy.alkemybankbase.data.model.expense.ExpenseResponse
 import com.Alkemy.alkemybankbase.data.model.send.Send
 import com.Alkemy.alkemybankbase.data.model.send.SendResponse
+import com.Alkemy.alkemybankbase.data.model.topup.TopupInput
+import com.Alkemy.alkemybankbase.data.model.topup.TopupResponse
 import com.Alkemy.alkemybankbase.repository.send.SendRepository
+import com.Alkemy.alkemybankbase.utils.Constants
 import com.Alkemy.alkemybankbase.utils.Constants.TYPE_PAYMENT
 import com.Alkemy.alkemybankbase.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +22,7 @@ import javax.inject.Inject
 class SendViewModel @Inject constructor(private val sendRepo : SendRepository) : ViewModel() {
     val isLoading = MutableLiveData<Boolean>()
     lateinit var sendResponse : SendResponse
-    var sendError : String = ""
+    var errorLiveData = MutableLiveData<String>()
     val amountErrorResourceLiveData = MutableLiveData<Int>()
     val conceptErrorResourceLiveData = MutableLiveData<Int>()
     val toAccountIdErrorResourceLiveData = MutableLiveData<Int>()
@@ -39,6 +42,9 @@ class SendViewModel @Inject constructor(private val sendRepo : SendRepository) :
         }else if(toAccount_Id <= 0){
             toAccountIdErrorResourceLiveData.value = R.string.toAccountId_error
         }
+        else if(amount>AccountManager.balance){
+            amountErrorResourceLiveData.value = R.string.low_amount_error
+        }
         else{
             isFormValidLiveData.value = true
         }
@@ -56,11 +62,12 @@ class SendViewModel @Inject constructor(private val sendRepo : SendRepository) :
         when(sendResult){
             is Resource.Success -> {
                 //SessionManager.saveAuthToken(context, userResult.data.accessToken)
+                errorLiveData.value = ""
                 isLoading.value = false
                 sendResponse = sendResult.data!!
             }
             is Resource.Failure -> {
-                sendError = sendResult.toString()
+                errorLiveData.value = sendResult.message.toString()
                 isLoading.value = false
             }
             else -> throw IllegalArgumentException("Illegal Result")

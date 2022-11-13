@@ -70,7 +70,7 @@ class LoginViewModel @Inject constructor(private val loginRepo : LoginRepository
                 getAllAccounts(context)
             }
             is Resource.Failure -> {
-                loginError = loginResult.toString()
+                loginError = loginResult.message.toString()
                 isLoading.value = false
             }
             else -> throw IllegalArgumentException("Illegal Result")

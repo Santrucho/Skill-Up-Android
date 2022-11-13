@@ -9,6 +9,7 @@ object AccountManager {
 
     var userId : Int = 0
     var accountId : Int = 0
+    var balance : Int = 0
 
     fun saveIds(context: Context, valueUser: String,valueAccount:String) {
         val prefs : SharedPreferences = context.getSharedPreferences(context.getString(R.string.app_name),
@@ -29,4 +30,5 @@ object AccountManager {
             context.getSharedPreferences(context.getString(R.string.app_name), Context.MODE_PRIVATE)
         return prefs.getString("accountId", null)
     }
+
 }

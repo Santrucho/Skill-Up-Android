@@ -17,6 +17,7 @@ import com.Alkemy.alkemybankbase.presentation.MovementViewModel
 import com.Alkemy.alkemybankbase.ui.adapters.TransactionAdapter
 import com.Alkemy.alkemybankbase.R
 import com.Alkemy.alkemybankbase.utils.Constants.TYPE_PAYMENT
+import com.google.firebase.analytics.FirebaseAnalytics
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,6 +27,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: MovementViewModel by viewModels()
     private lateinit var auth: String
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,12 +70,12 @@ class HomeFragment : Fragment() {
                 }
             binding.tvEmptyTransaction.isVisible = transactionList.isEmpty()
         }
-        viewModel.errorLiveData.observe(viewLifecycleOwner) { resId ->
+        viewModel.errorLiveData.observe(viewLifecycleOwner) {
             //show error message
             binding.clHome.isVisible = false
             binding.tvError.isVisible = true
             binding.btnRetry.isVisible = true
-            binding.tvError.text = getString(resId)
+            binding.tvError.text = it.toString()
 
         }
         viewModel.balance.observe(viewLifecycleOwner) { balance ->

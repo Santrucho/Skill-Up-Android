@@ -3,6 +3,7 @@ package com.Alkemy.alkemybankbase.ui.fragments
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.Alkemy.alkemybankbase.data.local.SessionManager
 import com.Alkemy.alkemybankbase.databinding.FragmentSendBinding
 import com.Alkemy.alkemybankbase.presentation.SendViewModel
+import com.Alkemy.alkemybankbase.ui.activities.HomeActivity
 import com.Alkemy.alkemybankbase.utils.LogBundle
 import com.Alkemy.alkemybankbase.utils.afterTextChanged
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -40,6 +42,7 @@ class SendFragment : Fragment() {
         setupListeners()
 
         auth = "${SessionManager.getToken(requireContext())}"
+        firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
         return binding.root
     }
 
@@ -49,12 +52,12 @@ class SendFragment : Fragment() {
                 LogBundle.logBundleAnalytics(firebaseAnalytics,"Send Pressed","enviar_pressed")
                 lifecycleScope.launch {
                     viewModel.send(auth,etDestination.text.toString().toInt(),etConcept.text.toString(),etAmount.text.toString().toInt())
-                    if (viewModel.sendResponse.status==200) {
+                    if (viewModel.errorLiveData.value.isNullOrBlank()) {
                         LogBundle.logBundleAnalytics(firebaseAnalytics,"Send Succeeded","enviar_dinero_success")
                         showDialog("Aceptar", "Envio de dinero exitoso")
-                    } else if (viewModel.sendError.isNotBlank()) {
+                    } else if (!viewModel.errorLiveData.value.isNullOrBlank()) {
                         LogBundle.logBundleAnalytics(firebaseAnalytics,"Send Failed","enviar_dinero_error")
-                        showAlert("Error",viewModel.sendError)
+                        showAlert("Error",viewModel.errorLiveData.value.toString())
                     }
                 }
             }
@@ -103,8 +106,8 @@ class SendFragment : Fragment() {
         }
     }
 
-    private fun navigateSend(){
-        val intent = Intent(requireContext(),SendFragment::class.java)
+    private fun navigateHome(){
+        val intent = Intent(requireContext(),HomeActivity::class.java)
         startActivity(intent)
     }
 
@@ -113,7 +116,7 @@ class SendFragment : Fragment() {
         builder.setTitle(title)
         builder.setMessage(message)
         builder.setPositiveButton("Aceptar", DialogInterface.OnClickListener(){
-                dialog,id -> navigateSend()
+                dialog,id -> navigateHome()
         })
         val dialog: AlertDialog = builder.create()
         dialog.show()

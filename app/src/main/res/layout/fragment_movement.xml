@@ -30,6 +30,24 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10"
         tools:listitem="@layout/transaction_layout" />
 
+    <TextView
+        android:id="@+id/tvErrorTransaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/you_cant_access_to_transactions"
+        android:layout_margin="8dp"
+        android:padding="16dp"
+        android:visibility="gone"
+        android:textSize="28sp"
+        android:background="@color/grey"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
