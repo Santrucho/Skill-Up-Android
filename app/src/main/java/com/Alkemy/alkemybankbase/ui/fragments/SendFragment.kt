@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -33,6 +34,7 @@ class SendFragment : Fragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentSendBinding.inflate(inflater,container,false)
         firebaseAnalytics = FirebaseAnalytics.getInstance(requireContext())
+        setupObservers()
         setupListener()
         return binding.root
     }
@@ -53,10 +55,32 @@ class SendFragment : Fragment() {
             }
         }
     }
+
+    private fun setupObservers() {
+        viewModel.isFormValidLiveData.observe(viewLifecycleOwner) {
+            binding.btnSend.isEnabled = it
+        }
+
+        viewModel.conceptErrorResourceLiveData.observe(viewLifecycleOwner) {
+            binding.etConcept.error = it.toString()
+        }
+        viewModel.amountErrorResourceLiveData.observe(viewLifecycleOwner) {
+            binding.etAmount.error = it.toString()
+        }
+        viewModel.toAccountIdErrorResourceLiveData.observe(viewLifecycleOwner) {
+            binding.etDestination.error = it.toString()
+        }
+        viewModel.isLoading.observe(viewLifecycleOwner) {
+            // show loading and hide ui
+            binding.prgbar.isVisible = it
+        }
+    }
+
     private fun navigateSend(){
         val intent = Intent(requireContext(),SendFragment::class.java)
         startActivity(intent)
     }
+
     private fun showDialog(title: String,message: String){
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle(title)
